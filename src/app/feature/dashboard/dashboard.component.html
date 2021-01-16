@@ -1,1 +1,36 @@
-<p>dashboard works!</p>
+<mat-sidenav-container style="height: 100%">
+  <mat-sidenav #sidenav mode="side" closed [class.mat-elevation-z3]="!isActive">
+      <mat-toolbar color="primary">
+          <div class="d-flex justify-content-center w-100">
+            Web To PWA
+          </div>
+      </mat-toolbar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <mat-toolbar class="header" color="primary">
+          <div class="d-flex justify-content-between align-items-center w-100">
+              <mat-icon (click)="sidenav.toggle()" class="pointer">menu</mat-icon>
+              <div class="d-flex align-items-center">
+                  <div class="d-flex flex-direction-column toolbar-info">
+                      <span class="header-title">TI Sistemas</span>
+                      <span class="header-sub-title">{{ username }}</span>
+                  </div>
+                  <button mat-mini-fab color="basic" [matMenuTriggerFor]="menu">
+                      <mat-icon class="color-base">
+                          person
+                      </mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="cerrarSesion()">
+                          <mat-icon>exit_to_app</mat-icon>
+                          <span>Desconectarse</span>
+                      </button>
+                  </mat-menu>
+              </div>
+          </div>
+      </mat-toolbar>
+      <div class="container">
+          <router-outlet></router-outlet>
+      </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

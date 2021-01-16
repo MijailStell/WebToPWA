@@ -20,6 +20,10 @@ export class GlobalService {
     return localStorage.getItem(Constantes.Token);
   }
 
+  getStoredUser(): string {
+    return localStorage.getItem(Constantes.Usuario);
+  }
+
   removeAuthorizationToken() {
     localStorage.removeItem(Constantes.Token);
     localStorage.removeItem(Constantes.Usuario);
