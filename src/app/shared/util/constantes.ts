@@ -1,4 +1,6 @@
 export class Constantes {
+  static readonly PaginaRecargada = 'reload';
+  static readonly Recargar = '1';
   static readonly RutaAuth = '/auth';
   static readonly RutaBase = '/';
   static readonly Token = 'token';

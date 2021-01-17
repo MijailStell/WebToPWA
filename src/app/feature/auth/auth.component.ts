@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GlobalService } from 'src/app/shared/services/global.service';
+import { Constantes } from 'src/app/shared/util/constantes';
 
 @Component({
   selector: 'app-auth',
@@ -11,11 +12,19 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
   @ViewChild('usuarioElement', { static: false }) usuarioElement: ElementRef;
   loginForm: FormGroup;
+  reaload: string = this.globalService.getValueKeyStorage(Constantes.PaginaRecargada);
 
-  constructor(private globalService: GlobalService,) { }
+  constructor(private globalService: GlobalService) { }
 
   ngOnInit() {
-    this.setForm();
+    if (this.reaload === Constantes.Recargar) {
+      setTimeout(() => {
+        this.globalService.removeKeyStorage(Constantes.PaginaRecargada);
+        window.location.reload();
+      }, 1000);
+    } else {
+      this.setForm();
+    }
   }
 
   ngAfterViewInit() {
