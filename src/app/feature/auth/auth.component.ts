@@ -17,20 +17,19 @@ export class AuthComponent implements OnInit, AfterViewInit {
   constructor(private globalService: GlobalService) { }
 
   ngOnInit() {
-    if (this.reaload === Constantes.Recargar) {
-      setTimeout(() => {
-        this.globalService.removeKeyStorage(Constantes.PaginaRecargada);
-        window.location.reload();
-      }, 10000);
-    } else {
-      this.setForm();
-    }
+    this.setForm();
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.usuarioElement.nativeElement.focus();
     }, 0);
+    if (this.reaload === Constantes.Recargar) {
+      setTimeout(() => {
+        this.globalService.removeKeyStorage(Constantes.PaginaRecargada);
+        window.location.reload();
+      }, 10000);
+    }
   }
 
   setForm() {
