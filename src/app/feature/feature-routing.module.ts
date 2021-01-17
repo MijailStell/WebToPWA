@@ -11,6 +11,12 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'bridge',
+    children: [
+      { path: '', loadChildren: () => import('./bridge/bridge.module').then(m => m.BridgeModule) }
+    ]
+  },
+  {
     path: '',
     canActivate: [VerificaTokenGuard],
     children: [

@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
 
   cerrarSesion() {
     this.globalService.removeAuthorizationToken();
-    window.location.href = Constantes.RutaBase;
+    window.location.href = Constantes.RutaBridge;
   }
 
 }
