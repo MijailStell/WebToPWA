@@ -21,7 +21,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
       setTimeout(() => {
         this.globalService.removeKeyStorage(Constantes.PaginaRecargada);
         window.location.reload();
-      }, 3000);
+      }, 10000);
     } else {
       this.setForm();
     }
