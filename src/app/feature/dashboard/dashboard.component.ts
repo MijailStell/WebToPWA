@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { GlobalService } from 'src/app/shared/services/global.service';
 import { Constantes } from 'src/app/shared/util/constantes';
 
@@ -12,15 +11,14 @@ export class DashboardComponent implements OnInit {
 
   isActive = true;
   username: string = this.globalService.getStoredUser();
-  constructor(private globalService: GlobalService,
-              private router: Router) { }
+  constructor(private globalService: GlobalService) { }
 
   ngOnInit() {
   }
 
   cerrarSesion() {
     this.globalService.removeAuthorizationToken();
-    this.router.navigate([Constantes.RutaAuth]);
+    window.location.href = Constantes.RutaBase;
   }
 
 }
