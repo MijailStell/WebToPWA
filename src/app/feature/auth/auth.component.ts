@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GlobalService } from 'src/app/shared/services/global.service';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { Constantes } from 'src/app/shared/util/constantes';
 
 @Component({
@@ -14,7 +15,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
   reaload: string = this.globalService.getValueKeyStorage(Constantes.PaginaRecargada);
 
-  constructor(private globalService: GlobalService) { }
+  constructor(private globalService: GlobalService,
+              private loaderService: LoaderService) { }
 
   ngOnInit() {
     this.setForm();
@@ -25,10 +27,11 @@ export class AuthComponent implements OnInit, AfterViewInit {
       this.usuarioElement.nativeElement.focus();
     }, 0);
     if (this.reaload === Constantes.Recargar) {
+      this.loaderService.show();
       setTimeout(() => {
         this.globalService.removeKeyStorage(Constantes.PaginaRecargada);
         window.location.reload();
-      }, 10000);
+      }, 6000);
     }
   }
 
