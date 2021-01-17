@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
   cerrarSesion() {
     this.globalService.removeAuthorizationToken();
     this.globalService.addKeyStorage(Constantes.PaginaRecargada, Constantes.Recargar);
-    window.location.href = Constantes.RutaAuth;
+    window.location.href = Constantes.RutaBase;
   }
 
 }
