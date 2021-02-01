@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
+import { EnvironmentServiceProvider } from './shared/services/environment.service.provider';
 
 @NgModule({
   declarations: [
@@ -17,9 +19,12 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    SharedModule
+    SharedModule,
+    CoreModule
   ],
-  providers: [],
+  providers: [
+    EnvironmentServiceProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,10 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from './material.module';
 import { LoadingComponent } from './components/loading/loading.component';
-
+import { SearchComponent } from './modals/search/search.component';
+import { SecureDomainPipe } from './pipes/secure-domain.pipe';
 
 @NgModule({
-  declarations: [LoadingComponent],
+  declarations: [LoadingComponent, SearchComponent, SecureDomainPipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -21,7 +22,9 @@ import { LoadingComponent } from './components/loading/loading.component';
     ReactiveFormsModule,
     RouterModule,
     MaterialModule,
-    LoadingComponent
-  ]
+    LoadingComponent,
+    SecureDomainPipe
+  ],
+  entryComponents: [ SearchComponent]
 })
 export class SharedModule { }

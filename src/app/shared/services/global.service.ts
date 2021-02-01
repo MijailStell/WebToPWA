@@ -28,12 +28,8 @@ export class GlobalService {
     return localStorage.getItem(Constantes.Usuario);
   }
 
-  removeAuthorizationToken() {
-    localStorage.removeItem(Constantes.Token);
-    localStorage.removeItem(Constantes.Usuario);
-    localStorage.removeItem(Constantes.RoomId);
-    localStorage.removeItem(Constantes.RoomName);
-    localStorage.removeItem(Constantes.LoginStatus);
+  removeAllKeys() {
+    localStorage.clear();
   }
 
   addKeyStorage(key: string, value: any) {

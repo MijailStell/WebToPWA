@@ -93,13 +93,16 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.webmanifest.json"
+              "src/manifest.webmanifest.json",
+              "src/env.js"
             ],
             "styles": [
               "src/styles.scss",
               "src/assets/styles/custom-theme.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/Youtube.min.js"
+            ]
           }
         },
         "lint": {
