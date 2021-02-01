@@ -40,7 +40,7 @@ export class SearchComponent implements OnInit {
     const eleccion = video.id.videoId;
     if (eleccion.length > 0) {
         const url = `${Constantes.PathBaseYoutube}${eleccion}`;
-        this.globalService.addKeyStorage(Constantes.IsLocal, true);
+        this.globalService.addKeyStorage(Constantes.IsLocal, Constantes.True);
         this.eventbus.emit(new EmitEvent(ActionEvent.VideoSelected, url));
     }
     this.dialogRef.close();

@@ -69,19 +69,19 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       this.player.on('pause', () => {
           if (this.globalService.getValueKeyStorage(Constantes.IsLocal) == null) {
               this.socketVideo.emit('pause');
-          } else if (this.globalService.getValueKeyStorage(Constantes.IsLocal) === true) {
+          } else if (this.globalService.getValueKeyStorage(Constantes.IsLocal) === Constantes.True) {
             this.socketVideo.emit('pause');
           }
-          this.globalService.addKeyStorage(Constantes.IsLocal, true);
+          this.globalService.addKeyStorage(Constantes.IsLocal, Constantes.True);
       });
 
       this.player.on('play', () => {
           if (this.globalService.getValueKeyStorage(Constantes.IsLocal) == null) {
             this.socketVideo.emit('play', { url: this.player.currentSrc(), time: this.player.currentTime()});
-          } else if (this.globalService.getValueKeyStorage(Constantes.IsLocal) === true) {
+          } else if (this.globalService.getValueKeyStorage(Constantes.IsLocal) === Constantes.True) {
             this.socketVideo.emit('play', { url: this.player.currentSrc(), time: this.player.currentTime()});
           }
-          this.globalService.addKeyStorage(Constantes.IsLocal, true);
+          this.globalService.addKeyStorage(Constantes.IsLocal, Constantes.True);
       });
     });
   }
@@ -99,7 +99,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setSocketListener(): void {
-    this.socketVideo = io('https://playlist-pwa.herokuapp.com');
+    this.socketVideo = io('https://playlist-pwa.herokuapp.com/');
 
     this.socketVideo.on('connect', () => {
       this.globalService.addKeyStorage(Constantes.ConnectionId, this.socketVideo.id);
@@ -107,7 +107,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.socketVideo.on('played', (payload: any) => {
-      this.globalService.addKeyStorage(Constantes.IsLocal, false);
+      this.globalService.addKeyStorage(Constantes.IsLocal, Constantes.False);
         if (!this.globalService.getValueKeyStorage(Constantes.UrlVideo) ||
             (this.globalService.getValueKeyStorage(Constantes.UrlVideo) != payload.url)) {
               this.globalService.addKeyStorage(Constantes.UrlVideo, payload.url);
@@ -119,7 +119,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.socketVideo.on('paused', () => {
-      this.globalService.addKeyStorage(Constantes.IsLocal, false);
+      this.globalService.addKeyStorage(Constantes.IsLocal, Constantes.False);
         this.player.pause();
     });
   }

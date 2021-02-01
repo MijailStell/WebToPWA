@@ -1,6 +1,7 @@
 export class Constantes {
   static readonly ConnectionId = 'connectionId';
   static readonly Empty = '';
+  static readonly False = 'false';
   static readonly GenderId = 'genderId';
   static readonly IsLocal = 'isLocal';
   static readonly LoginStatus = 'loginStatus';
@@ -15,6 +16,7 @@ export class Constantes {
   static readonly RutaAuth = '/auth';
   static readonly RutaBase = '/';
   static readonly Token = 'token';
+  static readonly True = 'true';
   static readonly UnErrorHaOcurrido = 'Un error ha ocurrido';
   static readonly UrlVideo = 'urlVideo';
   static readonly Usuario = 'usuario';
