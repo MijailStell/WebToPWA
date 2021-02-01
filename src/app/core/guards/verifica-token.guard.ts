@@ -16,8 +16,8 @@ export class VerificaTokenGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Promise<boolean> | boolean {
-    const token = this.globalService.getAuthorizationToken();
-    if (!token) {
+    const logiStatus = this.globalService.getLoginStatus();
+    if (!logiStatus) {
       this.router.navigate([Constantes.RutaAuth]);
       return false;
     }

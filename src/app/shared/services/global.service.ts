@@ -20,6 +20,10 @@ export class GlobalService {
     return localStorage.getItem(Constantes.Token);
   }
 
+  getLoginStatus(): boolean{
+    return Boolean(localStorage.getItem(Constantes.LoginStatus));
+  }
+
   getStoredUser(): string {
     return localStorage.getItem(Constantes.Usuario);
   }
@@ -27,13 +31,16 @@ export class GlobalService {
   removeAuthorizationToken() {
     localStorage.removeItem(Constantes.Token);
     localStorage.removeItem(Constantes.Usuario);
+    localStorage.removeItem(Constantes.RoomId);
+    localStorage.removeItem(Constantes.RoomName);
+    localStorage.removeItem(Constantes.LoginStatus);
   }
 
-  addKeyStorage(key: string, value: string) {
+  addKeyStorage(key: string, value: any) {
     localStorage.setItem(key, value);
   }
 
-  getValueKeyStorage(key: string): string {
+  getValueKeyStorage(key: string): any {
     return localStorage.getItem(key);
   }
 

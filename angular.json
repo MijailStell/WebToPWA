@@ -29,7 +29,8 @@
               "src/manifest.webmanifest.json"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/styles/custom-theme.scss"
             ],
             "scripts": []
           },
@@ -95,7 +96,8 @@
               "src/manifest.webmanifest.json"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/styles/custom-theme.scss"
             ],
             "scripts": []
           }

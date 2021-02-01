@@ -1,7 +1,7 @@
 {
-  "name": "web-to-pwa",
-  "short_name": "web-to-pwa",
-  "theme_color": "#1976d2",
+  "name": "YouTube Room",
+  "short_name": "YouTube Room",
+  "theme_color": "#0099db",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
