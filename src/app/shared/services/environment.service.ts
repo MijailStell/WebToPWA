@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class EnvironmentService {
   public apiKey = '';
+  public timeOutNotifications: number = 3000;
 
   constructor() {}
 }

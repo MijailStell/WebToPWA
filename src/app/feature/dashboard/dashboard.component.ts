@@ -13,6 +13,8 @@ import { Constantes } from 'src/app/shared/util/constantes';
 import { ActionEvent } from 'src/app/shared/enums/action-event';
 import { EventBusService } from 'src/app/shared/services/event-bus.service';
 import { SearchComponent } from 'src/app/shared/modals/search/search.component';
+import { SwPush } from '@angular/service-worker';
+import { SubscriptorService } from 'src/app/core/services/subscriptor.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,12 +33,16 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   eventbusVideSelectedSub: Subscription;
   online$: Observable<boolean>;
   networkStatus: string;
+  roomName: string;
+  readonly VAPID_PUBLIC_KEY = 'BAkNsj2kN7ZYEbdKHDJwvEhuaeT6GJB9FYRbPHEFYSBHxxy8Zm2-k9Xmcbv20Z3kYsOdmcIODe9yH4h4CtVRCBQ';
 
   constructor(private globalService: GlobalService,
               private router: Router,
               private _formBuilder: FormBuilder,
               private eventBusService: EventBusService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private subscriptorService: SubscriptorService,
+              private swPush: SwPush) {
     this.online$ = merge(
       of(navigator.onLine),
       fromEvent(window, 'online').pipe(mapTo(true)),
@@ -48,6 +54,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.setForm();
     this.setSocketListener();
+    this.setPushConfig();
 
     this.eventbusVideSelectedSub = this.eventBusService.on(ActionEvent.VideoSelected, ((url: string) => {
       this.player.poster('');
@@ -56,6 +63,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     }));
 
     this.globalService.removeKeyStorage(Constantes.IsLocal);
+    this.roomName = this.globalService.getValueKeyStorage(Constantes.RoomName);
     this.player = videojs('myVideo', {sources: [{ src: `${this.videoUrl}`, type: 'video/youtube' }]});
     this.player.fluid();
     this.player.aspectRatio('5:2');
@@ -99,7 +107,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setSocketListener(): void {
-    this.socketVideo = io('https://playlist-pwa.herokuapp.com/');
+    this.socketVideo = io('http://localhost:4000');
 
     this.socketVideo.on('connect', () => {
       this.globalService.addKeyStorage(Constantes.ConnectionId, this.socketVideo.id);
@@ -124,6 +132,20 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  setPushConfig(): void {
+    this.swPush.messages.subscribe((message) => {
+      console.log('message => ' + JSON.stringify(message));
+    });
+
+    this.swPush.notificationClicks.subscribe(({ action, notification }) => {
+      console.log('action => ' + JSON.stringify(action));
+      console.log('notification => ' + JSON.stringify(notification));
+      window.open(notification.data.url);
+    });
+
+    this.subscriberTo();
+  }
+
   setNetworkStatus(): void {
     this.online$.subscribe(value => {
       this.networkStatus = value ? Constantes.Empty : `(${Constantes.Offline})`;
@@ -138,6 +160,19 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   cerrarSesion(): void {
     this.globalService.removeAllKeys();
     this.router.navigate([Constantes.RutaAuth]);
+  }
+
+  subscriberTo(): void {
+    if (this.swPush.isEnabled) {
+      this.swPush.requestSubscription({
+        serverPublicKey: this.VAPID_PUBLIC_KEY
+      })
+      .then(sub => {
+        this.subscriptorService.subscribe(sub).subscribe();
+        console.log(JSON.stringify(sub));
+      })
+      .catch(console.error);
+    }
   }
 
   openDialogSearch(): void {

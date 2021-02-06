@@ -1,9 +1,19 @@
 export class Constantes {
+  static readonly Accept = 'Aceptar';
+  static readonly AlertError = 'error';
+  static readonly AlertQuestion = 'question';
+  static readonly AlertSuccess = 'success';
+  static readonly AlertWarning = 'warning';
+  static readonly Cancel = 'Cancelar';
   static readonly ConnectionId = 'connectionId';
   static readonly Empty = '';
+  static readonly Environment = '__environment';
+  static readonly EstasSeguroEliminar = '¿Estás seguro de eliminar el';
+  static readonly EstasSeguroRealizarOperacion = '¿Estás seguro de realizar esta operación?';
   static readonly False = 'false';
   static readonly GenderId = 'genderId';
   static readonly IsLocal = 'isLocal';
+  static readonly LaOperacionSeRealizoSatisfactoriamente = 'La operación se realizó satisfactoriamente';
   static readonly LoginStatus = 'loginStatus';
   static readonly NetworkStatus = 'NetworkStatus';
   static readonly Offline = 'Offline';
@@ -11,13 +21,14 @@ export class Constantes {
   static readonly PaginaRecargada = 'reload';
   static readonly PathBaseYoutube = 'https://www.youtube.com/watch?v=';
   static readonly Recargar = '1';
+  static readonly Registred = 'Registrado!';
   static readonly RoomId = 'roomId';
   static readonly RoomName = 'roomName';
-  static readonly RutaAuth = '/auth';
+  static readonly RutaAuth = '/auth/login';
   static readonly RutaBase = '/';
   static readonly Token = 'token';
   static readonly True = 'true';
   static readonly UnErrorHaOcurrido = 'Un error ha ocurrido';
   static readonly UrlVideo = 'urlVideo';
-  static readonly Usuario = 'usuario';
+  static readonly User = 'usuario';
 }

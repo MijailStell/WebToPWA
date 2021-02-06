@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiKey: 'AIzaSyArH-JU-dtgamU1QKrn4STcnsOzmzhUzBo',
+  timeOutNotifications: 3000,
+  urlBaseServiciosApi: 'http://localhost:4000/api/'
 };
 
 /*

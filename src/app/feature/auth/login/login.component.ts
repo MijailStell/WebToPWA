@@ -8,11 +8,11 @@ import { LoaderService } from 'src/app/shared/services/loader.service';
 import { Constantes } from 'src/app/shared/util/constantes';
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class AuthComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   @ViewChild('usuarioElement', { static: false }) usuarioElement: ElementRef;
   loginForm: FormGroup;
@@ -64,7 +64,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
       const room = this.roomList.find(p=> p.id === this.loginForm.value.roomId);
       this.globalService.addKeyStorage(Constantes.RoomId, room.id);
       this.globalService.addKeyStorage(Constantes.RoomName, room.name);
-      this.globalService.addKeyStorage(Constantes.Usuario, this.loginForm.value.usuario);
+      this.globalService.addKeyStorage(Constantes.User, this.loginForm.value.usuario);
       this.globalService.addKeyStorage(Constantes.GenderId, this.loginForm.value.genderId);
       this.globalService.addKeyStorage(Constantes.LoginStatus, true);
       this.router.navigate([Constantes.RutaBase]);

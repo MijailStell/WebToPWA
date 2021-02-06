@@ -23,7 +23,6 @@ import { EnvironmentServiceProvider } from './shared/services/environment.servic
     CoreModule
   ],
   providers: [
-    EnvironmentServiceProvider
   ],
   bootstrap: [AppComponent]
 })

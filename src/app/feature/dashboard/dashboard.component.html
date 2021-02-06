@@ -2,7 +2,7 @@
   <mat-sidenav #sidenav mode="side" closed [class.mat-elevation-z3]="!isActive">
       <mat-toolbar color="primary">
           <div class="d-flex justify-content-center w-100">
-            Web To PWA
+            {{ roomName }}
           </div>
       </mat-toolbar>
   </mat-sidenav>
@@ -27,6 +27,10 @@
                       <button mat-menu-item (click)="cerrarSesion()">
                           <mat-icon>exit_to_app</mat-icon>
                           <span>Desconectarse</span>
+                      </button>
+                      <button mat-menu-item (click)="subscriberTo()">
+                        <mat-icon>subscriptions</mat-icon>
+                        <span>Subscribirse</span>
                       </button>
                   </mat-menu>
               </div>

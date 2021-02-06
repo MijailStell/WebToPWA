@@ -19,6 +19,7 @@ export class BaseService {
   constructor(protected httpClient: HttpClient) { }
 
   protected handleError(err: any) {
+    debugger;
     let errorMessage = '';
     if (err.error instanceof Error) {
       errorMessage = `${Constantes.UnErrorHaOcurrido} : ${err.error.message}`;

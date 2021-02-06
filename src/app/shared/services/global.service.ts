@@ -13,7 +13,7 @@ export class GlobalService {
     usuario: string
   ) {
     localStorage.setItem(Constantes.Token, token);
-    localStorage.setItem(Constantes.Usuario, usuario);
+    localStorage.setItem(Constantes.User, usuario);
   }
 
   getAuthorizationToken() {
@@ -25,7 +25,7 @@ export class GlobalService {
   }
 
   getStoredUser(): string {
-    return localStorage.getItem(Constantes.Usuario);
+    return localStorage.getItem(Constantes.User);
   }
 
   removeAllKeys() {
