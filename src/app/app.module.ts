@@ -8,7 +8,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
-import { EnvironmentServiceProvider } from './shared/services/environment.service.provider';
+import { LoaderService } from './shared/services/loader.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoaderInterceptor } from './shared/interceptors/loader.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,11 @@ import { EnvironmentServiceProvider } from './shared/services/environment.servic
     CoreModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
