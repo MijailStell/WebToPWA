@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   apiKey: 'AIzaSyArH-JU-dtgamU1QKrn4STcnsOzmzhUzBo',
-  timeOutNotifications: 3000,
-  urlBaseServiciosApi: 'http://localhost:4000/api/'
+  timeOutNotifications: 2000,
+  urlBaseServiciosApi: 'https://playlist-pwa.herokuapp.com'
 };

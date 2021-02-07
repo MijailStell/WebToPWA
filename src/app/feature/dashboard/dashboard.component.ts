@@ -15,6 +15,8 @@ import { EventBusService } from 'src/app/shared/services/event-bus.service';
 import { SearchComponent } from 'src/app/shared/modals/search/search.component';
 import { SwPush } from '@angular/service-worker';
 import { SubscriptorService } from 'src/app/core/services/subscriptor.service';
+import { UserSubscriptor } from 'src/app/core/models/user-subscriptor';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -107,7 +109,11 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setSocketListener(): void {
-    this.socketVideo = io('http://localhost:4000');
+    if(environment.production){
+      this.socketVideo = io();
+    } else {
+      this.socketVideo = io(environment.urlBaseServiciosApi);
+    }
 
     this.socketVideo.on('connect', () => {
       this.globalService.addKeyStorage(Constantes.ConnectionId, this.socketVideo.id);
@@ -142,8 +148,6 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log('notification => ' + JSON.stringify(notification));
       window.open(notification.data.url);
     });
-
-    this.subscriberTo();
   }
 
   setNetworkStatus(): void {
@@ -167,11 +171,13 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       this.swPush.requestSubscription({
         serverPublicKey: this.VAPID_PUBLIC_KEY
       })
-      .then(sub => {
-        this.subscriptorService.subscribe(sub).subscribe();
-        console.log(JSON.stringify(sub));
+      .then(pushSubscription => {
+        const userSubscriptor: UserSubscriptor = { pushSubscription, username: this.globalService.getStoredUser() }
+        this.subscriptorService.subscribe(userSubscriptor).subscribe();
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error(error);
+      });
     }
   }
 

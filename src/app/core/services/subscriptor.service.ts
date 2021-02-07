@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BaseService } from 'src/app/shared/services/base.service';
 import { environment } from 'src/environments/environment';
+import { UserSubscriptor } from 'src/app/core/models/user-subscriptor';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class SubscriptorService  extends BaseService {
     super(httpClient);
   }
 
-  subscribe(pushSubscription: PushSubscription) {
-    const url = `${environment.urlBaseServiciosApi}auth/subscribe`;
-    return this.httpClient.post(url, pushSubscription);
+  subscribe(userSubscriptor: UserSubscriptor) {
+    const url = `${environment.urlBaseServiciosApi}/api/auth/subscribe`;
+    return this.httpClient.post(url, userSubscriptor);
   }
 }

@@ -5,6 +5,7 @@ export class Constantes {
   static readonly AlertQuestion = 'question';
   static readonly AlertSuccess = 'success';
   static readonly AlertWarning = 'warning';
+  static readonly ApplicationName = 'Youtube Room';
   static readonly BadRequestCode = 400;
   static readonly Cancel = 'Cancelar';
   static readonly ConnectionId = 'connectionId';
@@ -17,6 +18,7 @@ export class Constantes {
   static readonly False = 'false';
   static readonly ForbiddenCode = 403;
   static readonly GenderId = 'genderId';
+  static readonly HayUnaNuevaVersionDisponibleDeseaActualizar = 'Hay una nueva versión disponible, ¿desea actualizar?';
   static readonly IsLocal = 'isLocal';
   static readonly LaOperacionSeRealizoSatisfactoriamente = 'La operación se realizó satisfactoriamente';
   static readonly LoginStatus = 'loginStatus';

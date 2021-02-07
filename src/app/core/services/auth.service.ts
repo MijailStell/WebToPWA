@@ -19,12 +19,12 @@ export class AuthService  extends BaseService {
   }
 
   login(userLogin: UserLogin) {
-    const url = `${environment.urlBaseServiciosApi}auth/login`;
+    const url = `${environment.urlBaseServiciosApi}/api/auth/login`;
     return this.httpClient.post<any>(url, userLogin);
   }
 
   register(userRegister: UserRegister) {
-    const url = `${environment.urlBaseServiciosApi}auth/register`;
+    const url = `${environment.urlBaseServiciosApi}/api/auth/register`;
     return this.httpClient.post<any>(url, userRegister);
   }
 }

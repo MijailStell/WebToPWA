@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
+import { ConfirmParameter } from 'src/app/shared/models/confirm-parameter';
+import { Constantes } from 'src/app/shared/util/constantes';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +10,9 @@ import { SwUpdate } from '@angular/service-worker';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'web-to-pwa';
 
-  constructor(private swUpdate: SwUpdate) {
-
+  constructor(private swUpdate: SwUpdate,
+              private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -20,9 +22,16 @@ export class AppComponent implements OnInit {
   reloadCache(){
     if(this.swUpdate.isEnabled){
       this.swUpdate.available.subscribe(() =>{
-        if(confirm('Hay una nueva versión disponible, ¿desea actualizar?')){
-          window.location.reload();
-        }
+        let confirmParameter: ConfirmParameter = {
+          title: Constantes.ApplicationName,
+          text: Constantes.HayUnaNuevaVersionDisponibleDeseaActualizar,
+          icon: Constantes.AlertWarning
+        };
+        this.messageService.confirmMessage(confirmParameter).then(result => {
+          if (result.value) {
+            window.location.reload();
+          }
+        });
       })
     }
   }
