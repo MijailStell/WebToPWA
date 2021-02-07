@@ -20,7 +20,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             case Constantes.BadRequestCode:
               this.messageService.showMessage({
                 title: Constantes.Alerta,
-                text: httpErrorResponse.error.msg,
+                text: httpErrorResponse.error.msg?? Constantes.OcurrioUnError,
                 icon: Constantes.AlertWarning
               });
               break;

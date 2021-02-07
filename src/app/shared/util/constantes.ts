@@ -8,6 +8,7 @@ export class Constantes {
   static readonly BadRequestCode = 400;
   static readonly Cancel = 'Cancelar';
   static readonly ConnectionId = 'connectionId';
+  static readonly Email = 'email';
   static readonly Empty = '';
   static readonly Environment = '__environment';
   static readonly EstasSeguroEliminar = '¿Estás seguro de eliminar el';
@@ -39,5 +40,6 @@ export class Constantes {
   static readonly UnAuthorizedCode = 401;
   static readonly UnErrorHaOcurrido = 'Un error ha ocurrido';
   static readonly UrlVideo = 'urlVideo';
-  static readonly User = 'usuario';
+  static readonly User = 'username';
+  static readonly UId = 'uid';
 }

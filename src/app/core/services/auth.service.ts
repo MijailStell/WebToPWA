@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from 'src/app/shared/services/base.service';
 import { UserRegister } from 'src/app/core/models/user-register';
 import { environment } from 'src/environments/environment'
+import { UserLogin } from 'src/app/core/models/user-login';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,11 @@ export class AuthService  extends BaseService {
    */
   constructor(protected httpClient: HttpClient) {
     super(httpClient);
+  }
+
+  login(userLogin: UserLogin) {
+    const url = `${environment.urlBaseServiciosApi}auth/login`;
+    return this.httpClient.post<any>(url, userLogin);
   }
 
   register(userRegister: UserRegister) {

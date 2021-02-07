@@ -6,17 +6,12 @@
           </mat-card-header>
           <mat-card-content class="card-content">
               <mat-form-field class="w-100">
-                  <span matPrefix><img src="./assets/img/icon-user.svg" alt=""></span>
-                  <input matInput type="text" placeholder="Nickname" #usuarioElement formControlName="usuario">
+                <span matPrefix><img src="./assets/img/icon-email.svg" alt=""></span>
+                <input matInput type="text" placeholder="Correo" #emailElement formControlName="email">
               </mat-form-field>
-              <br>
               <mat-form-field class="w-100">
-                <span matPrefix><img src="./assets/img/icon-gender.svg" alt=""></span>
-                <mat-label>Gender</mat-label>
-                <mat-select formControlName="genderId">
-                  <mat-option [value]="1">Male</mat-option>
-                  <mat-option [value]="2">Female</mat-option>
-                </mat-select>
+                <span matPrefix><img src="./assets/img/icon-pass.svg" alt=""></span>
+                <input matInput type="password" placeholder="Clave" formControlName="password">
               </mat-form-field>
               <mat-form-field class="w-100">
                 <span matPrefix><img src="./assets/img/icon-room.svg" alt=""></span>

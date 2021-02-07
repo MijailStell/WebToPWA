@@ -10,7 +10,7 @@ import { MessageService } from 'src/app/shared/services/message.service';
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('userElement', { static: false }) userElement: ElementRef;
+  @ViewChild('usernameElement', { static: false }) usernameElement: ElementRef;
   registerForm: FormGroup;
 
   constructor(private _formBuilder: FormBuilder,
@@ -23,13 +23,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.userElement.nativeElement.focus();
+      this.usernameElement.nativeElement.focus();
     }, 0);
   }
 
   setForm(): void {
     this.registerForm = this._formBuilder.group({
-      user: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
+      username: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(50)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
       genderId: ['', [
