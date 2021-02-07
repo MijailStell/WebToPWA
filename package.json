@@ -25,6 +25,7 @@
     "@angular/router": "~11.0.9",
     "@angular/service-worker": "~11.0.9",
     "@types/socket.io-client": "^1.4.34",
+    "@youon/videojs-pip": "^1.0.3",
     "concat": "^1.0.3",
     "eslint": "^7.18.0",
     "hammerjs": "^2.0.8",
@@ -33,6 +34,7 @@
     "sweetalert2": "^10.14.0",
     "tslib": "^2.0.0",
     "video.js": "^7.8.2",
+    "videojs-pip": "^1.0.3",
     "videojs-youtube": "^2.6.1",
     "youtube-video": "^2.2.0",
     "zone.js": "~0.10.2"

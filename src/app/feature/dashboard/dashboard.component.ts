@@ -5,6 +5,7 @@ import { fromEvent, merge, Observable, of, Subscription } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import videojs from 'video.js';
+import 'videojs-pip';
 import 'videojs-youtube';
 import * as io from 'socket.io-client';
 
@@ -62,6 +63,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       this.player.poster('');
       this.player.src({ src: url, type: 'video/youtube' });
       this.player.play();
+      this.player.usingPlugin('pip');
     }));
 
     this.globalService.removeKeyStorage(Constantes.IsLocal);
