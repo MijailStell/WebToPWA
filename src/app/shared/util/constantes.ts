@@ -44,4 +44,5 @@ export class Constantes {
   static readonly UrlVideo = 'urlVideo';
   static readonly User = 'username';
   static readonly UId = 'uid';
+  static readonly VideoInvaido= 'Video inválido';
 }

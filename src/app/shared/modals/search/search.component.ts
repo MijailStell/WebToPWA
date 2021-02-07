@@ -9,6 +9,7 @@ import { ActionEvent } from 'src/app/shared/enums/action-event';
 import { GlobalService } from 'src/app/shared/services/global.service';
 import { EventBusService } from 'src/app/shared/services/event-bus.service';
 import { YoutubeService } from 'src/app/core/services/youtube.service';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
   selector: 'app-search',
@@ -23,7 +24,8 @@ export class SearchComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<SearchComponent>,
               public youtubeService: YoutubeService,
               private eventbus: EventBusService,
-              private globalService: GlobalService)
+              private globalService: GlobalService,
+              private messageService: MessageService)
   { }
 
   ngOnInit() {
@@ -38,10 +40,16 @@ export class SearchComponent implements OnInit {
 
   selectedButton(video: any) {
     const eleccion = video.id.videoId;
-    if (eleccion.length > 0) {
+    if (eleccion && eleccion.length > 0) {
         const url = `${Constantes.PathBaseYoutube}${eleccion}`;
         this.globalService.addKeyStorage(Constantes.IsLocal, Constantes.True);
         this.eventbus.emit(new EmitEvent(ActionEvent.VideoSelected, url));
+    } else {
+      this.messageService.showMessage({
+        title: Constantes.Alerta,
+        text: Constantes.VideoInvaido,
+        icon: Constantes.AlertWarning
+      });
     }
     this.dialogRef.close();
   }

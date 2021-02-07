@@ -63,7 +63,6 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       this.player.poster('');
       this.player.src({ src: url, type: 'video/youtube' });
       this.player.play();
-      this.player.usingPlugin('pip');
     }));
 
     this.globalService.removeKeyStorage(Constantes.IsLocal);
