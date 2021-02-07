@@ -119,7 +119,16 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.socketVideo.on('connect', () => {
       this.globalService.addKeyStorage(Constantes.ConnectionId, this.socketVideo.id);
       this.connectionId = this.socketVideo.id;
+      this.socketVideo.emit('connected', {
+        username: this.globalService.getValueKeyStorage(Constantes.Username),
+        roomId: this.globalService.getValueKeyStorage(Constantes.RoomId),
+        roomName: this.globalService.getValueKeyStorage(Constantes.RoomName)
+      });
     });
+
+	  this.socketVideo.on('updatechat', (payload: string) => {
+      console.log(JSON.stringify(payload));
+	  });
 
     this.socketVideo.on('played', (payload: any) => {
       this.globalService.addKeyStorage(Constantes.IsLocal, Constantes.False);
@@ -163,6 +172,10 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   cerrarSesion(): void {
+    this.socketVideo.emit('leave', {
+      username: this.globalService.getValueKeyStorage(Constantes.Username),
+      roomName: this.globalService.getValueKeyStorage(Constantes.RoomName)
+    });
     this.globalService.removeAllKeys();
     this.router.navigate([Constantes.RutaAuth]);
   }

@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.globalService.addKeyStorage(Constantes.RoomId, room.id);
         this.globalService.addKeyStorage(Constantes.RoomName, room.name);
         this.globalService.addKeyStorage(Constantes.UId, response.uid);
-        this.globalService.addKeyStorage(Constantes.User, response.username);
+        this.globalService.addKeyStorage(Constantes.Username, response.username);
         this.globalService.addKeyStorage(Constantes.GenderId, response.genderId);
         this.globalService.addKeyStorage(Constantes.LoginStatus, true);
         this.router.navigate([Constantes.RutaBase]);

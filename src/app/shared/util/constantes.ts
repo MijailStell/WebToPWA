@@ -42,7 +42,7 @@ export class Constantes {
   static readonly UnAuthorizedCode = 401;
   static readonly UnErrorHaOcurrido = 'Un error ha ocurrido';
   static readonly UrlVideo = 'urlVideo';
-  static readonly User = 'username';
+  static readonly Username = 'username';
   static readonly UId = 'uid';
   static readonly VideoInvaido= 'Video inválido';
 }
