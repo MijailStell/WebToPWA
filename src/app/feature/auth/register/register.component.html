@@ -8,7 +8,7 @@
               <mat-form-field class="w-100">
                   <span matPrefix><img src="./assets/img/icon-user.svg" alt=""></span>
                   <input matInput type="text" placeholder="Nickname" #usernameElement formControlName="username">
-                  <mat-error *ngIf="registerForm.get('username').hasError('minLength')">
+                  <mat-error *ngIf="registerForm.get('username').hasError('minlength')">
                     <mat-hint>Ingrese mínimo 6 caracteres</mat-hint>
                   </mat-error>
               </mat-form-field>
@@ -19,7 +19,7 @@
               <mat-form-field class="w-100">
                 <span matPrefix><img src="./assets/img/icon-pass.svg" alt=""></span>
                 <input matInput type="password" placeholder="Clave" formControlName="password">
-                <mat-error *ngIf="registerForm.get('password').hasError('minLength')">
+                <mat-error *ngIf="registerForm.get('password').hasError('minlength')">
                   <mat-hint>Ingrese mínimo 6 caracteres</mat-hint>
                 </mat-error>
               </mat-form-field>

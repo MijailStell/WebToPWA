@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fromEvent, merge, Observable, of, Subscription } from 'rxjs';
@@ -29,6 +29,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   isActive = true;
   username: string = this.globalService.getStoredUser();
   searchForm: FormGroup;
+  chatForm: FormGroup;
   socketVideo: any;
   connectionId = '';
   videoUrl = 'https://www.youtube.com/watch?v=sem5xr_wezM';
@@ -38,6 +39,9 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   networkStatus: string;
   roomName: string;
   readonly VAPID_PUBLIC_KEY = 'BAkNsj2kN7ZYEbdKHDJwvEhuaeT6GJB9FYRbPHEFYSBHxxy8Zm2-k9Xmcbv20Z3kYsOdmcIODe9yH4h4CtVRCBQ';
+  chatList: any[] = [];
+  @ViewChild('chatMessages', { static: false }) chatMessagesToScroll: ElementRef;
+  unreadMessages: number = 0;
 
   constructor(private globalService: GlobalService,
               private router: Router,
@@ -62,6 +66,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.eventbusVideSelectedSub = this.eventBusService.on(ActionEvent.VideoSelected, ((url: string) => {
       this.player.poster('');
       this.player.src({ src: url, type: 'video/youtube' });
+      this.player.currentTime(0);
       this.player.play();
     }));
 
@@ -107,6 +112,9 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.searchForm = this._formBuilder.group({
       search: ['', Validators.required]
     });
+    this.chatForm = this._formBuilder.group({
+      message: ['', Validators.required]
+    });
   }
 
   setSocketListener(): void {
@@ -126,8 +134,20 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     });
 
-	  this.socketVideo.on('updatechat', (payload: string) => {
+	  this.socketVideo.on('updatechat', (payload: any) => {
       console.log(JSON.stringify(payload));
+      if(this.isActive && payload.username !== Constantes.Empty) {
+        this.unreadMessages += 1;
+      }
+      if(payload.username === Constantes.Empty) {
+        payload.username = 'Tú';
+      }
+      this.chatList.push(payload);
+
+      setTimeout(() => {
+        const scrollHeight = this.chatMessagesToScroll.nativeElement.scrollHeight;
+        this.chatMessagesToScroll.nativeElement.scrollTop = scrollHeight + 170;
+      }, 100);
 	  });
 
     this.socketVideo.on('played', (payload: any) => {
@@ -203,6 +223,23 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const dialogRef = this.dialog.open(SearchComponent, dialogConfig);
       dialogRef.componentInstance.searchText = this.searchForm.value.search;
+    }
+  }
+
+  sendMessage(): void {
+    if (this.chatForm.valid) {
+      const message = this.chatForm.value.message;
+      this.chatForm.reset();
+			// tell server to execute 'sendchat' and send along one parameter
+			this.socketVideo.emit('sendchat', message);
+    }
+  }
+
+  sidenavToggle(sidenav: any): void{
+    sidenav.toggle();
+    this.isActive = !this.isActive;
+    if(this.isActive) {
+      this.unreadMessages = 0;
     }
   }
 }

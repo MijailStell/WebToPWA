@@ -1,15 +1,41 @@
 <mat-sidenav-container style="height: 100%">
   <mat-sidenav #sidenav mode="side" closed [class.mat-elevation-z3]="!isActive">
-      <mat-toolbar color="primary">
+      <mat-toolbar color="primary" class="vh10">
           <div class="d-flex justify-content-center w-100">
-            {{ roomName }}
+            ChatRoom - {{ roomName }}
           </div>
       </mat-toolbar>
+
+      <div id="chatMessages" #chatMessages class="vh75">
+        <div *ngFor="let chat of chatList">
+          <p>
+            <b>{{chat.username}}</b> {{chat.message}}
+          </p>
+        </div>
+      </div>
+
+      <mat-card [formGroup]="chatForm" class="chatGroup vh15">
+        <mat-card-content>
+          <!-- TODO: Better layout of form controls -->
+          <mat-form-field class="chatRow">
+            <textarea matInput placeholder="Message" formControlName="message" (keydown.enter)="sendMessage()">
+            </textarea>
+          </mat-form-field>
+
+          <button mat-mini-fab color="primary" (click)="sendMessage()" [disabled]="!chatForm.get('message').value">
+            <mat-icon>send</mat-icon>
+          </button>
+        </mat-card-content>
+      </mat-card>
   </mat-sidenav>
   <mat-sidenav-content>
-      <mat-toolbar class="header" color="primary">
+      <mat-toolbar class="header vh10" color="primary">
           <div class="d-flex justify-content-between align-items-center w-100">
-              <mat-icon (click)="sidenav.toggle()" class="pointer">menu</mat-icon>
+              <mat-icon (click)="sidenavToggle(sidenav)" class="pointer" *ngIf="!isActive">videocam</mat-icon>
+              <mat-icon (click)="sidenavToggle(sidenav)" class="pointer" *ngIf="isActive"
+                [matBadge]="unreadMessages" matBadgeOverlap="false" matBadgeColor="warn">
+                chat
+              </mat-icon>
               <div class="d-flex align-items-center">
                 <span class="title pointer" (click)="goToHome()">PLAYER {{networkStatus}}</span>
               </div>
@@ -39,7 +65,7 @@
       <div class="container">
           <!-- <router-outlet></router-outlet> -->
           <form id="searchForm" [formGroup]="searchForm" (ngSubmit)="openDialogSearch()">
-            <mat-form-field>
+            <mat-form-field class="searchRow">
                 <mat-placeholder>Buscar Youtube </mat-placeholder>
                 <input matInput class="form-control"  name="search" formControlName="search">
                 <mat-error *ngIf="searchForm.get('search').hasError('required')">

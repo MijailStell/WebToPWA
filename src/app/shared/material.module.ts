@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -16,6 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 @NgModule({
   declarations: [],
   imports: [
+    MatBadgeModule,
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
@@ -31,6 +33,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatToolbarModule
   ],
   exports: [
+    MatBadgeModule,
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
