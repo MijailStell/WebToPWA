@@ -1,9 +1,11 @@
-import { ApplicationRef, Component, OnInit } from '@angular/core';
-import { SwUpdate, UpdateActivatedEvent } from '@angular/service-worker';
+import { ApplicationRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { SwUpdate, UpdateAvailableEvent } from '@angular/service-worker';
 import { ConfirmParameter } from 'src/app/shared/models/confirm-parameter';
 import { Constantes } from 'src/app/shared/util/constantes';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { interval } from 'rxjs';
+import { concat, interval } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -14,47 +16,48 @@ export class AppComponent implements OnInit {
 
   constructor(private swUpdate: SwUpdate,
               private applicationRef: ApplicationRef,
-              private messageService: MessageService) {
-    this.updateClient();
-    this.checkUpdate();
+              private messageService: MessageService,
+              @Inject(PLATFORM_ID) private platformId: any) {
   }
 
   ngOnInit(): void {
-  }
-
-  updateClient(): void {
-    if (!this.swUpdate.isEnabled) {
-      console.log('No soporta service worker');
-      return;
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkVersionUpdates();
+      this.subscribeToAvailableVersions();
     }
-    this.swUpdate.available.subscribe((event) => {
-      console.log(`actual version: `, event.current, `nueva versión: `, event.available);
-      let confirmParameter: ConfirmParameter = {
-        title: Constantes.ApplicationName,
-        text: Constantes.HayUnaNuevaVersionDisponibleDeseaActualizar,
-        icon: Constantes.AlertWarning
-      };
-      this.messageService.confirmMessage(confirmParameter).then(result => {
-        if (result.value) {
-          this.swUpdate.activateUpdate().then(() => location.reload());
-        }
-      });
-    });
+  }
 
-    this.swUpdate.activated.subscribe((event) => {
-      console.log(`version previa: `, event.previous, `nueva versión: `, event.current);
+  private checkVersionUpdates() {
+    const appIsStable$ = this.applicationRef.isStable.pipe(
+      first(isStable => isStable === true)
+    );
+    const everySixHours$ = interval(10 * 1000);
+    const everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$);
+    everySixHoursOnceAppIsStable$.subscribe(() => {
+      if (this.swUpdate.isEnabled) {
+        this.swUpdate.checkForUpdate();
+      }
     });
   }
 
-  checkUpdate() {
-    this.applicationRef.isStable.subscribe((isStable) => {
-      if (isStable) {
-        const timeInterval = interval(8 * 60 * 60 * 1000);
+  private subscribeToAvailableVersions() {
+    this.swUpdate.available.subscribe((event: UpdateAvailableEvent) => {
+      if (event.current) {
+        this.askUserToUpdateApp(event);
+      }
+    });
+  }
 
-        timeInterval.subscribe(() => {
-          this.swUpdate.checkForUpdate().then(() => console.log('verificando'));
-          console.log('actualización verificada');
-        });
+  private askUserToUpdateApp(event: UpdateAvailableEvent) {
+    const message = `Hay una nueva versión: ${event.current.hash} disponible. ¿Desea actualizar ahora?`;
+    let confirmParameter: ConfirmParameter = {
+      title: Constantes.ApplicationName,
+      text: message,
+      icon: Constantes.AlertWarning
+    };
+    this.messageService.confirmMessage(confirmParameter).then(result => {
+      if (result.value) {
+        window.location.reload();
       }
     });
   }
