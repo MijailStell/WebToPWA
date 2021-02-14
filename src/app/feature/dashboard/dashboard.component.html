@@ -16,7 +16,6 @@
 
       <mat-card [formGroup]="chatForm" class="chatGroup vh15">
         <mat-card-content>
-          <!-- TODO: Better layout of form controls -->
           <mat-form-field class="chatRow">
             <textarea matInput placeholder="Message" formControlName="message" (keydown.enter)="sendMessage()">
             </textarea>

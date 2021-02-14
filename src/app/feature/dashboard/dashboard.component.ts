@@ -38,7 +38,6 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   online$: Observable<boolean>;
   networkStatus: string;
   roomName: string;
-  readonly VAPID_PUBLIC_KEY = 'BAkNsj2kN7ZYEbdKHDJwvEhuaeT6GJB9FYRbPHEFYSBHxxy8Zm2-k9Xmcbv20Z3kYsOdmcIODe9yH4h4CtVRCBQ';
   chatList: any[] = [];
   @ViewChild('chatMessages', { static: false }) chatMessagesToScroll: ElementRef;
   unreadMessages: number = 0;
@@ -203,7 +202,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   subscriberTo(): void {
     if (this.swPush.isEnabled) {
       this.swPush.requestSubscription({
-        serverPublicKey: this.VAPID_PUBLIC_KEY
+        serverPublicKey: environment.VAPID_PUBLIC_KEY
       })
       .then(pushSubscription => {
         const userSubscriptor: UserSubscriptor = { pushSubscription, username: this.globalService.getStoredUser() }
