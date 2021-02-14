@@ -8,10 +8,16 @@
               <mat-form-field class="w-100">
                 <span matPrefix><img src="./assets/img/icon-email.svg" alt=""></span>
                 <input matInput type="text" placeholder="Correo" #emailElement formControlName="email">
+                <mat-error *ngIf="loginForm.get('email').hasError('required')">
+                  <mat-hint>Campo obligatorio</mat-hint>
+                </mat-error>
               </mat-form-field>
               <mat-form-field class="w-100">
                 <span matPrefix><img src="./assets/img/icon-pass.svg" alt=""></span>
                 <input matInput type="password" placeholder="Clave" formControlName="password">
+                <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                  <mat-hint>Campo obligatorio</mat-hint>
+                </mat-error>
               </mat-form-field>
               <mat-form-field class="w-100">
                 <span matPrefix><img src="./assets/img/icon-room.svg" alt=""></span>

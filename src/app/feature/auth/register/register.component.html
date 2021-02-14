@@ -28,6 +28,9 @@
                 <mat-error *ngIf="registerForm.get('password').hasError('minlength')">
                   <mat-hint>Ingrese mínimo 6 caracteres</mat-hint>
                 </mat-error>
+                <mat-error *ngIf="registerForm.get('password').hasError('required')">
+                  <mat-hint>Campo obligatorio</mat-hint>
+                </mat-error>
               </mat-form-field>
               <mat-form-field class="w-100">
                 <span matPrefix><img src="./assets/img/icon-gender.svg" alt=""></span>
