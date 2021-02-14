@@ -104,15 +104,3 @@
 ::ng-deep .forgotpassForm>* {
   width: 100%;
 }
-
-#footer {
-  background: rgba(0, 0, 0, 0.15);
-  padding: 0.25rem 0;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  box-sizing: border-box;
-  backdrop-filter: blur(10px);
-}
-#footer span{ color: white;}

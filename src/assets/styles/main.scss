@@ -168,3 +168,16 @@
         margin: 10px 0 0 0;
     }
 }
+
+.footer {
+  padding: 0.25rem 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: row-reverse;
+  color: white;
+  font-size: 14px;
+}
