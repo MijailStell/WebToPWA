@@ -1,0 +1,26 @@
+<mat-toolbar color="primary">
+
+  <button mat-button class="sidenav-toggle" (click)="toggleSidenav.emit()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span>Player</span>
+
+  <span class="example-spacer"></span>
+
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="toggleTheme.emit()">Cambiar Tema</button>
+    <button mat-menu-item (click)="cerrarSesion()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Desconectarse</span>
+  </button>
+  <button mat-menu-item (click)="subscriberTo()">
+    <mat-icon>subscriptions</mat-icon>
+    <span>Subscribirse</span>
+  </button>
+  </mat-menu>
+
+</mat-toolbar>

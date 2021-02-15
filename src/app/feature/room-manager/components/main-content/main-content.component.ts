@@ -1,66 +1,44 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { fromEvent, merge, Observable, of, Subscription } from 'rxjs';
-import { mapTo } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import videojs from 'video.js';
-import 'videojs-pip';
 import 'videojs-youtube';
 import * as io from 'socket.io-client';
 
 import { GlobalService } from 'src/app/shared/services/global.service';
 import { Constantes } from 'src/app/shared/util/constantes';
-import { ActionEvent } from 'src/app/shared/enums/action-event';
 import { EventBusService } from 'src/app/shared/services/event-bus.service';
+import { ActionEvent } from 'src/app/shared/enums/action-event';
+
 import { SearchComponent } from 'src/app/shared/modals/search/search.component';
-import { SwPush } from '@angular/service-worker';
-import { SubscriptorService } from 'src/app/core/services/subscriptor.service';
-import { UserSubscriptor } from 'src/app/core/models/user-subscriptor';
-import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-main-content',
+  templateUrl: './main-content.component.html',
+  styleUrls: ['./main-content.component.scss']
 })
-export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MainContentComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  isActive = true;
-  username: string = this.globalService.getStoredUser();
   searchForm: FormGroup;
   chatForm: FormGroup;
   socketVideo: any;
   connectionId = '';
+  isActive = true;
   videoUrl = 'https://www.youtube.com/watch?v=sem5xr_wezM';
   player: videojs.Player;
   eventbusVideSelectedSub: Subscription;
-  online$: Observable<boolean>;
-  networkStatus: string;
   roomName: string;
-  chatList: any[] = [];
-  @ViewChild('chatMessages', { static: false }) chatMessagesToScroll: ElementRef;
-  unreadMessages: number = 0;
 
-  constructor(private globalService: GlobalService,
-              private router: Router,
-              private _formBuilder: FormBuilder,
+  constructor(private _formBuilder: FormBuilder,
               private eventBusService: EventBusService,
               public dialog: MatDialog,
-              private subscriptorService: SubscriptorService,
-              private swPush: SwPush) {
-    this.online$ = merge(
-      of(navigator.onLine),
-      fromEvent(window, 'online').pipe(mapTo(true)),
-      fromEvent(window, 'offline').pipe(mapTo(false))
-    );
-    this.setNetworkStatus();
-  }
+              private globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.setForm();
     this.setSocketListener();
-    this.setPushConfig();
 
     this.eventbusVideSelectedSub = this.eventBusService.on(ActionEvent.VideoSelected, ((url: string) => {
       this.player.poster('');
@@ -71,12 +49,13 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.globalService.removeKeyStorage(Constantes.IsLocal);
     this.roomName = this.globalService.getValueKeyStorage(Constantes.RoomName);
-    this.player = videojs('myVideo', {sources: [{ src: `${this.videoUrl}`, type: 'video/youtube' }]});
-    this.player.fluid();
-    this.player.aspectRatio('5:2');
   }
 
   ngAfterViewInit(): void {
+    this.player = videojs('myVideo2', {sources: [{ src: `${this.videoUrl}`, type: 'video/youtube' }]});
+    this.player.fluid();
+    this.player.aspectRatio('5:2');
+
     this.player.on('ready', () => {
       this.player.on('ended', function () {
       });
@@ -133,21 +112,21 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     });
 
-	  this.socketVideo.on('updatechat', (payload: any) => {
-      console.log(JSON.stringify(payload));
-      if(this.isActive && payload.username !== Constantes.Empty) {
-        this.unreadMessages += 1;
-      }
-      if(payload.username === Constantes.Empty) {
-        payload.username = 'Tú';
-      }
-      this.chatList.push(payload);
+	  // this.socketVideo.on('updatechat', (payload: any) => {
+    //   console.log(JSON.stringify(payload));
+    //   if(this.isActive && payload.username !== Constantes.Empty) {
+    //     this.unreadMessages += 1;
+    //   }
+    //   if(payload.username === Constantes.Empty) {
+    //     payload.username = 'Tú';
+    //   }
+    //   this.chatList.push(payload);
 
-      setTimeout(() => {
-        const scrollHeight = this.chatMessagesToScroll.nativeElement.scrollHeight;
-        this.chatMessagesToScroll.nativeElement.scrollTop = scrollHeight + 170;
-      }, 100);
-	  });
+    //   setTimeout(() => {
+    //     const scrollHeight = this.chatMessagesToScroll.nativeElement.scrollHeight;
+    //     this.chatMessagesToScroll.nativeElement.scrollTop = scrollHeight + 170;
+    //   }, 100);
+	  // });
 
     this.socketVideo.on('played', (payload: any) => {
       this.globalService.addKeyStorage(Constantes.IsLocal, Constantes.False);
@@ -167,57 +146,6 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  setPushConfig(): void {
-    this.swPush.messages.subscribe((message) => {
-      console.log('message => ' + JSON.stringify(message));
-    });
-
-    this.swPush.notificationClicks.subscribe(({ action, notification }) => {
-      console.log('action => ' + JSON.stringify(action));
-      console.log('notification => ' + JSON.stringify(notification));
-      window.open(notification.data.url);
-    });
-  }
-
-  setNetworkStatus(): void {
-    this.online$.subscribe(value => {
-      this.networkStatus = value ? Constantes.Empty : `(${Constantes.Offline})`;
-      this.globalService.addKeyStorage(Constantes.NetworkStatus, JSON.stringify(value));
-    });
-  }
-
-  goToHome(): void {
-    this.router.navigate([Constantes.RutaBase]);
-  }
-
-  cerrarSesion(): void {
-    this.socketVideo.emit('leave', {
-      username: this.globalService.getValueKeyStorage(Constantes.Username),
-      roomName: this.globalService.getValueKeyStorage(Constantes.RoomName)
-    });
-    this.globalService.removeAllKeys();
-    this.router.navigate([Constantes.RutaAuth]);
-  }
-
-  irNuevaVersion(): void {
-    this.router.navigate(['/room-manager']);
-  }
-
-  subscriberTo(): void {
-    if (this.swPush.isEnabled) {
-      this.swPush.requestSubscription({
-        serverPublicKey: environment.VAPID_PUBLIC_KEY
-      })
-      .then(pushSubscription => {
-        const userSubscriptor: UserSubscriptor = { pushSubscription, username: this.globalService.getStoredUser() }
-        this.subscriptorService.subscribe(userSubscriptor).subscribe();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    }
-  }
-
   openDialogSearch(): void {
     if (this.searchForm.valid) {
       const dialogConfig = new MatDialogConfig();
@@ -226,23 +154,6 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const dialogRef = this.dialog.open(SearchComponent, dialogConfig);
       dialogRef.componentInstance.searchText = this.searchForm.value.search;
-    }
-  }
-
-  sendMessage(): void {
-    if (this.chatForm.valid) {
-      const message = this.chatForm.value.message;
-      this.chatForm.reset();
-			// tell server to execute 'sendchat' and send along one parameter
-			this.socketVideo.emit('sendchat', message);
-    }
-  }
-
-  sidenavToggle(sidenav: any): void{
-    sidenav.toggle();
-    this.isActive = !this.isActive;
-    if(this.isActive) {
-      this.unreadMessages = 0;
     }
   }
 }

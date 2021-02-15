@@ -1,4 +1,4 @@
-<mat-sidenav-container style="height: 100%">
+<mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" closed [class.mat-elevation-z3]="!isActive">
       <mat-toolbar color="primary" class="vh10">
           <div class="d-flex justify-content-center w-100">
@@ -57,6 +57,10 @@
                         <mat-icon>subscriptions</mat-icon>
                         <span>Subscribirse</span>
                       </button>
+                      <button mat-menu-item (click)="irNuevaVersion()">
+                        <mat-icon>fiber_new</mat-icon>
+                        <span>Nueva Verión</span>
+                    </button>
                   </mat-menu>
               </div>
           </div>

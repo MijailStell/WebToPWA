@@ -1,0 +1,33 @@
+<mat-sidenav-container class="app-sidenav-container"
+                      [class.dark-theme]="isDarkTheme" [dir]="dir">
+  <mat-sidenav #sidenav class="app-sidenav mat-elevation-z10"
+               [opened]="!isScreenSmall"
+               [mode]="isScreenSmall ? 'over' : 'side'">
+    <mat-toolbar color="primary">
+      ChatRoom
+    </mat-toolbar>
+    <mat-nav-list>
+      <mat-list-item>
+        <a matLine [routerLink]="['/contactmanager', 1]">
+          Usuario 01
+        </a>
+      </mat-list-item>
+      <mat-list-item>
+        <a matLine [routerLink]="['/contactmanager', 2]">
+          Usuario 02
+        </a>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <div class="app-sidenav-content">
+    <app-toolbar (toggleTheme)="toggleTheme()"
+                 (toggleSidenav)="sidenav.toggle()"
+                 (toggleDir)="toggleDir()">
+    </app-toolbar>
+    <div class="wrapper">
+      <app-main-content></app-main-content>
+    </div>
+  </div>
+
+</mat-sidenav-container>
