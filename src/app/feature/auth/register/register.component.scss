@@ -1,5 +1,4 @@
 .register-content {
-  height: 100vh;
   display: flex;
   top: 0;
 }
@@ -13,13 +12,8 @@
   justify-content: center;
   align-items: center;
   border-radius: 0;
+  box-shadow: none !important;
   font-family: 'MYRIADPRO-REGULAR';
-  .logo {
-      img {
-          width: 100%;
-          margin-bottom: 30px;
-      }
-  }
   .card-header {
       margin-bottom: 25px;
       mat-card-title {
@@ -51,13 +45,13 @@
       }
   }
   .btn-register {
-      width: 50%;
-      margin-top: 2rem;
+    width: 100%;
+    margin-top: 2rem;
   }
-  .forgot-pass {
-      color: #eeeeee;
-      font-family: 'MYRIADPRO-REGULAR';
-      cursor: pointer;
+  .login {
+    color: #eeeeee;
+    font-family: 'MYRIADPRO-REGULAR';
+    cursor: pointer;
   }
 }
 
@@ -81,26 +75,6 @@
   color: white !important;
 }
 
-:host ::ng-deep .mat-checkbox {
-  color: white;
-  font-family: 'MYRIADPRO-REGULAR';
-  .mat-checkbox-background {
-      background-color: white;
-      font-family: 'MYRIADPRO-REGULAR';
-  }
-  .mat-checkbox-focused {
-      .mat-ink-ripple {
-          background-color: white;
-          font-family: 'MYRIADPRO-REGULAR';
-      }
-  }
-}
-
-::ng-deep .forgotpassForm {
-  display: flex;
-  flex-direction: column;
-}
-
-::ng-deep .forgotpassForm>* {
-  width: 100%;
+.mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: 0px i !important;
 }

@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         Validators.required,
         Validators.min(1),
         Validators.max(2)]
-      ],
+      ]
     });
   }
 

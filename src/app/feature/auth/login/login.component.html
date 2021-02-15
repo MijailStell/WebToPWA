@@ -11,6 +11,9 @@
                 <mat-error *ngIf="loginForm.get('email').hasError('required')">
                   <mat-hint>Campo obligatorio</mat-hint>
                 </mat-error>
+                <mat-error *ngIf="loginForm.get('email').hasError('email')">
+                  <mat-hint>Correo inválido</mat-hint>
+                </mat-error>
               </mat-form-field>
               <mat-form-field class="w-100">
                 <span matPrefix><img src="./assets/img/icon-pass.svg" alt=""></span>
@@ -32,9 +35,8 @@
           <button type="submit" [disabled]="!loginForm.valid" mat-raised-button class="btn-login">Ingresar</button>
           <div class="mt-2">
             ¿No tienes cuenta?
-            <a class="forgot-pass" routerLink="/auth/register">Regístrate</a>
+            <a class="register" routerLink="/auth/register">Regístrate</a>
         </div>
       </form>
   </mat-card>
 </div>
-<div class="footer"><span>Versión <b>1.0.0</b></span></div>
