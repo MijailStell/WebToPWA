@@ -3,9 +3,11 @@ import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/s
 import { Router } from '@angular/router';
 import { fromEvent, merge, Observable, of } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
+
 import { GlobalService } from 'src/app/shared/services/global.service';
 import { Constantes } from 'src/app/shared/util/constantes';
-
+import { ChatService } from 'src/app/feature/room-manager/services/chat.service';
+import { SubscriberService } from 'src/app/feature/room-manager/services/subscriber.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -20,10 +22,15 @@ export class ToolbarComponent implements OnInit {
 
   online$: Observable<boolean>;
   networkStatus: string;
+  isActive = true;
+  isLeft = true;
+  unreadMessages$: Observable<number>;
 
   constructor(private snackBar: MatSnackBar,
               private router: Router,
-              private globalService: GlobalService) {
+              private globalService: GlobalService,
+              private chatService: ChatService,
+              private subscriberService: SubscriberService) {
     this.online$ = merge(
       of(navigator.onLine),
       fromEvent(window, 'online').pipe(mapTo(true)),
@@ -33,6 +40,8 @@ export class ToolbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.unreadMessages$ = this.chatService.getUnreadMessages$();
+    this.subscriberService.init();
   }
 
   openSnackBar(message: string, action: string) : MatSnackBarRef<SimpleSnackBar> {
@@ -44,8 +53,21 @@ export class ToolbarComponent implements OnInit {
   setNetworkStatus(): void {
     this.online$.subscribe(value => {
       this.networkStatus = value ? Constantes.Empty : `(${Constantes.Offline})`;
-      this.globalService.addKeyStorage(Constantes.NetworkStatus, JSON.stringify(value));
+      this.globalService.addKeyStorage(Constantes.NetworkStatus, value);
     });
+  }
+
+  sidenavToggle(): void{
+    this.toggleSidenav.emit();
+    this.isActive = !this.isActive;
+    if(this.isActive) {
+      this.unreadMessages$ = of(0);
+    }
+  }
+
+  changeDirection() {
+    this.toggleDir.emit();
+    this.isLeft = !this.isLeft;
   }
 
   goToHome(): void {
@@ -53,11 +75,13 @@ export class ToolbarComponent implements OnInit {
   }
 
   cerrarSesion(): void {
-
+    this.chatService.leave();
+    this.globalService.removeAllKeys();
+    this.router.navigate([Constantes.RutaAuth]);
   }
 
   subscriberTo(): void {
-
+    this.subscriberService.subscriber();
   }
 
 }

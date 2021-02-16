@@ -13,14 +13,12 @@ const SMALL_WIDTH_BREAKPOINT = 720;
 export class MainComponent implements OnInit {
 
   public isScreenSmall: boolean;
-
   isDarkTheme: boolean = false;
   dir: string = 'ltr';
+  @ViewChild(MatSidenav) sidenav: MatSidenav;
 
   constructor(private breakpointObserver: BreakpointObserver,
               private router: Router) { }
-
-  @ViewChild(MatSidenav) sidenav: MatSidenav;
 
   toggleTheme() {
     this.isDarkTheme = !this.isDarkTheme;

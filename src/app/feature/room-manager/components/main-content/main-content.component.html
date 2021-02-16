@@ -1,18 +1,18 @@
-  <!-- <router-outlet></router-outlet> -->
-  <form id="searchForm" [formGroup]="searchForm" (ngSubmit)="openDialogSearch()">
-    <mat-form-field class="searchRow">
-        <mat-placeholder>Buscar Youtube </mat-placeholder>
-        <input matInput class="form-control"  name="search" formControlName="search">
-        <mat-error *ngIf="searchForm.get('search').hasError('required')">
-          <mat-hint>Ingresar un palabra en la caja de texto</mat-hint>
-        </mat-error>
-        <button mat-raised-button color="primary" type="submit" matSuffix mat-stroked-button aria-label="search">
-            <mat-icon>search</mat-icon>
-        </button>
-    </mat-form-field>
+<form id="searchForm" [formGroup]="searchForm" (ngSubmit)="openDialogSearch()">
+  <mat-form-field class="searchRow">
+      <mat-placeholder>Buscar Youtube </mat-placeholder>
+      <input matInput class="form-control"  name="search" formControlName="search">
+      <mat-error *ngIf="searchForm.get('search').hasError('required')">
+        <mat-hint>Ingresar un palabra en la caja de texto</mat-hint>
+      </mat-error>
+      <button mat-raised-button color="primary" type="submit" matSuffix mat-stroked-button aria-label="search">
+          <mat-icon>search</mat-icon>
+      </button>
+  </mat-form-field>
 </form>
-<video id="myVideo2"
+<video id="myVideo"
     class="video-js vjs-big-play-centered"
     controls
     data-setup='{ "techOrder": ["youtube", "html5"] }'>
+    <source [src]="videoUrl | secureDomain" type="video/youtube">
 </video>

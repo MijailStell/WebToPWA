@@ -8,6 +8,17 @@ $candy-app-warn:    mat-palette($mat-deep-orange);
 
 $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
 @include angular-material-theme($candy-app-theme);
+
+.dark-theme {
+  $primary-dark: mat-palette($mat-pink, 700);
+  $accent-dark: mat-palette($mat-green);
+  $warn-dark: mat-palette($mat-red);
+
+  $theme-dark: mat-dark-theme($primary-dark, $accent-dark, $warn-dark);
+
+  @include angular-material-theme($theme-dark);
+}
+
 .mat-select-value {
   color: rgb(255 255 255) !important;
 }

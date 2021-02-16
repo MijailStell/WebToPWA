@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
@@ -12,10 +12,12 @@ export class LoadingComponent implements OnInit {
   color = 'primary';
   mode = 'indeterminate';
   value = 50;
-  isLoading: Subject<boolean> = this.loaderService.isLoading;
+  isLoading$: Observable<boolean>;
+
   constructor(private loaderService: LoaderService){}
 
   ngOnInit() {
+    this.isLoading$ = this.loaderService.getIsLoading$();
   }
 
 }

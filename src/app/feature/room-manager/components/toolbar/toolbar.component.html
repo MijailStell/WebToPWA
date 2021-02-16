@@ -1,26 +1,41 @@
 <mat-toolbar color="primary">
 
-  <button mat-button class="sidenav-toggle" (click)="toggleSidenav.emit()">
+  <button mat-button class="sidenav-toggle" (click)="sidenavToggle()">
     <mat-icon>menu</mat-icon>
   </button>
 
-  <span>Player</span>
+  <span>Player  {{networkStatus}}</span>
 
   <span class="example-spacer"></span>
+
+  <button mat-button>
+    <mat-icon (click)="sidenavToggle()" class="pointer"
+      [matBadge]="unreadMessages$ | async" matBadgeOverlap="false" matBadgeColor="warn">
+      chat
+    </mat-icon>
+  </button>
 
   <button mat-button [matMenuTriggerFor]="menu">
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="toggleTheme.emit()">Cambiar Tema</button>
+    <button mat-menu-item (click)="toggleTheme.emit()">
+      <mat-icon>change_circle</mat-icon>
+      <span>Cambiar Tema</span>
+    </button>
+    <button mat-menu-item (click)="changeDirection()">
+      <mat-icon *ngIf="isLeft">format_textdirection_r_to_l</mat-icon>
+      <mat-icon *ngIf="!isLeft">format_textdirection_l_to_r</mat-icon>
+      <span>Cambiar Dirección</span>
+    </button>
+    <button mat-menu-item (click)="subscriberTo()">
+      <mat-icon>subscriptions</mat-icon>
+      <span>Subscribirse</span>
+    </button>
     <button mat-menu-item (click)="cerrarSesion()">
       <mat-icon>exit_to_app</mat-icon>
       <span>Desconectarse</span>
-  </button>
-  <button mat-menu-item (click)="subscriberTo()">
-    <mat-icon>subscriptions</mat-icon>
-    <span>Subscribirse</span>
-  </button>
+    </button>
   </mat-menu>
 
 </mat-toolbar>
