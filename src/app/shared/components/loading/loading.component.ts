@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { delay } from 'rxjs/operators';
+
 import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
@@ -13,11 +15,17 @@ export class LoadingComponent implements OnInit {
   mode = 'indeterminate';
   value = 50;
   isLoading$: Observable<boolean>;
+  loading: boolean = false;
 
   constructor(private loaderService: LoaderService){}
 
   ngOnInit() {
     this.isLoading$ = this.loaderService.getIsLoading$();
+    this.isLoading$
+    .pipe(delay(0))
+    .subscribe((loading) => {
+      this.loading = loading;
+    });
   }
 
 }
