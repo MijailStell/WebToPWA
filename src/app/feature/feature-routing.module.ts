@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { VerificaTokenGuard } from 'src/app/core/guards/verifica-token.guard';
 
 const routes: Routes = [
   {
@@ -9,6 +10,7 @@ const routes: Routes = [
     ]
   },
   {
+    canActivate: [VerificaTokenGuard],
     path: '',
     children: [
       { path: '', loadChildren: () => import('./room-manager/room-manager.module').then(m => m.RoomManagerModule) },

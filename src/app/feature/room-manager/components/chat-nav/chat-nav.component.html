@@ -1,5 +1,5 @@
 <div class="container-chat">
-  <section class="messages">
+  <section class="messages" #chatMessages>
       <section *ngFor="let chat of chatList">
           <h3 *ngIf="chat.type === 1" class="login">{{chat.message}}</h3>
           <div *ngIf="chat.type === 2" class="msg msg--me">
@@ -8,7 +8,7 @@
           <div *ngIf="chat.type === 3" class="msg msg--them">
             <blockquote>{{chat.message}}</blockquote>
           </div>
-          <h3 *ngIf="chat.type === 3" class="logout">{{chat.message}}</h3>
+          <h3 *ngIf="chat.type === 4" class="logout">{{chat.message}}</h3>
       </section>
   </section>
   <form [formGroup]="chatForm">

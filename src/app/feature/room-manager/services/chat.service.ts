@@ -38,6 +38,12 @@ export class ChatService {
 
       this.socketVideo?.on('updatechat', (payload: Payload) => {
         const username = this.globalService.getValueKeyStorage(Constantes.Username);
+        if(payload.type === 1 || payload.type === 4) {
+          if(payload.username !== username) {
+            this.messages.push(payload);
+            this.messages$.next(this.messages);
+          }
+        }
         if(payload.type === 2) {
           if(payload.username !== username) {
             payload.type = 3;
@@ -46,9 +52,9 @@ export class ChatService {
           } else {
             payload.username = Constantes.You;
           }
+          this.messages.push(payload);
+          this.messages$.next(this.messages);
         }
-        this.messages.push(payload);
-        this.messages$.next(this.messages);
       });
 
       this.socketVideo?.on('played', (payload: Payload) => {
@@ -94,6 +100,7 @@ export class ChatService {
       username: this.globalService.getValueKeyStorage(Constantes.Username),
       roomName: this.globalService.getValueKeyStorage(Constantes.RoomName)
     });
+    this.socketVideo = undefined;
   }
 
   public pause = () => {

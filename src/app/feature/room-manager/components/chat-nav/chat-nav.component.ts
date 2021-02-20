@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ChatService } from 'src/app/feature/room-manager/services/chat.service';
@@ -14,6 +14,7 @@ export class ChatNavComponent implements OnInit {
   chatForm: FormGroup;
   messagesSubscription: Subscription;
   chatList: Payload[] = [];
+  @ViewChild('chatMessages', { static: false }) chatMessagesToScroll: ElementRef;
 
   constructor(private _formBuilder: FormBuilder,
               private chatService: ChatService) { }
@@ -33,6 +34,11 @@ export class ChatNavComponent implements OnInit {
     this.messagesSubscription = this.chatService.getMessages$().subscribe((messageList: Payload[]) => {
       console.log(JSON.stringify(messageList));
       this.chatList = messageList;
+
+      setTimeout(() => {
+        const scrollHeight = this.chatMessagesToScroll.nativeElement.scrollHeight;
+        this.chatMessagesToScroll.nativeElement.scrollTop = scrollHeight + 170;
+        }, 100);
     });
   }
 
