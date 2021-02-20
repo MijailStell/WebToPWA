@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   login(): void {
     if (this.loginForm.valid) {
       const room = this.roomList.find(p=> p.id === this.loginForm.value.roomId);
+      this.loginForm.value.email = (this.loginForm.value.email as string).toLowerCase();
       this.authService.login(this.loginForm.value).subscribe(response => {
         this.globalService.addKeyStorage(Constantes.RoomId, room.id);
         this.globalService.addKeyStorage(Constantes.RoomName, room.name);

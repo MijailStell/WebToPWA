@@ -42,7 +42,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   register(): void {
     if (this.registerForm.valid) {
+      this.registerForm.value.email = (this.registerForm.value.email as string).toLowerCase();
       this.authService.register(this.registerForm.value).subscribe(response => {
+        this.registerForm.reset();
         this.messageService.successSaveMessage();
       });
     }
