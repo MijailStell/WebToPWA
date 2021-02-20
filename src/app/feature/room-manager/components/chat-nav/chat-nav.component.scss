@@ -1,0 +1,97 @@
+.container-chat{
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #ededed;
+}
+
+.vh14 {
+  height: 14vh;
+}
+
+.login, .logout {
+  margin-top: 0;
+  font-size: .7em;
+  font-weight: normal;
+  text-align: center;
+  color: #727b80;
+}
+
+.messages, blockquote {
+    padding: .5em;
+}
+
+input {
+    padding-left: .325em;
+    border: none;
+    flex: 1;
+}
+
+.msg {
+  display: flex;
+  position: relative;
+  margin-bottom: .5em;
+}
+
+blockquote {
+    border-radius: .35em;
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    max-width: 60%;
+}
+
+.msg--them blockquote::after, .msg--me blockquote::before {
+    position: absolute;
+    display: block;
+    content: '';
+    width: 0;
+    height: 0;
+}
+
+.msg--them blockquote {
+  background-color: #fff;
+  margin-left: 1em;
+}
+
+.msg--them blockquote::after {
+  border: .5em solid #fff;
+  border-color: #fff #fff transparent transparent;
+  top: .5em;
+  left: -1em;
+}
+
+.msg--me blockquote {
+  background-color: #dcf8c6;
+}
+
+.msg--me blockquote::before {
+    border: .5em solid #dcf8c6;
+    border-color: #dcf8c6 transparent transparent #dcf8c6;
+    top: .5em;
+    right: -1em;
+}
+
+form {
+  padding: 1px;
+  display: flex;
+  padding: 2px;
+}
+
+
+.messages {
+  flex: 1;
+  overflow: auto;
+}
+
+.msg--me {
+  justify-content: flex-end;
+}
+
+.msg--me blockquote {
+    order: -1;
+    margin-right: 1em;
+}
+.m2 {
+  margin: 2px;
+}

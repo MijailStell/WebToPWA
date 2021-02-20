@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { MainComponent } from './components/main/main.component';
 import { MainContentComponent } from './components/main-content/main-content.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { ChatNavComponent } from './components/chat-nav/chat-nav.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent}
@@ -13,5 +15,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class RoomManagerRoutingModule {
-  static components = [ MainComponent, MainContentComponent, ToolbarComponent ];
+  static components = [ MainComponent, MainContentComponent, ToolbarComponent, ChatNavComponent ];
 }

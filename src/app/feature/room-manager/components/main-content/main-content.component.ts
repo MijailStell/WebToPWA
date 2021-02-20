@@ -20,7 +20,6 @@ export class MainContentComponent implements OnInit, OnDestroy, AfterViewInit {
   searchForm: FormGroup;
   videoUrl = 'https://www.youtube.com/watch?v=sem5xr_wezM';
   player: videojs.Player;
-  roomName: string;
   playedSubscription: Subscription;
   pausedSubscription: Subscription;
   searchedSubscription: Subscription;
@@ -35,7 +34,6 @@ export class MainContentComponent implements OnInit, OnDestroy, AfterViewInit {
     this.chatService.init();
     this.setSubscription();
     this.globalService.removeKeyStorage(Constantes.IsLocal);
-    this.roomName = this.globalService.getValueKeyStorage(Constantes.RoomName);
   }
 
   ngAfterViewInit(): void {

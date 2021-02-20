@@ -15,8 +15,8 @@ export class ChatService {
   private socketVideo: any;
   private unreadMessages: number = 0;
   private unreadMessages$ = new BehaviorSubject<number>(this.unreadMessages);
-  private messages: any[] = [];
-  private messages$ = new BehaviorSubject<any[]>(this.messages);
+  private messages: Payload[] = [];
+  private messages$ = new BehaviorSubject<Payload[]>(this.messages);
   private played$ = new Subject<Payload>();
   private paused$ = new Subject();
   private playItemSelected$ = new Subject<string>();
@@ -37,13 +37,15 @@ export class ChatService {
       });
 
       this.socketVideo?.on('updatechat', (payload: Payload) => {
-        console.log(JSON.stringify(payload));
-        if(payload.username !== Constantes.Empty) {
-          this.unreadMessages += 1;
-          this.unreadMessages$.next(this.unreadMessages)
-        }
-        if(payload.username === Constantes.Empty) {
-          payload.username = 'Tú';
+        const username = this.globalService.getValueKeyStorage(Constantes.Username);
+        if(payload.type === 2) {
+          if(payload.username !== username) {
+            payload.type = 3;
+            this.unreadMessages += 1;
+            this.unreadMessages$.next(this.unreadMessages)
+          } else {
+            payload.username = Constantes.You;
+          }
         }
         this.messages.push(payload);
         this.messages$.next(this.messages);

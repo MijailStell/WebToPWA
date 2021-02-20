@@ -3,6 +3,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 
+import { GlobalService } from 'src/app/shared/services/global.service';
+import { Constantes } from 'src/app/shared/util/constantes';
+
 const SMALL_WIDTH_BREAKPOINT = 720;
 
 @Component({
@@ -16,9 +19,11 @@ export class MainComponent implements OnInit {
   isDarkTheme: boolean = false;
   dir: string = 'ltr';
   @ViewChild(MatSidenav) sidenav: MatSidenav;
+  roomName: string;
 
   constructor(private breakpointObserver: BreakpointObserver,
-              private router: Router) { }
+              private router: Router,
+              private globalService: GlobalService) { }
 
   toggleTheme() {
     this.isDarkTheme = !this.isDarkTheme;
@@ -40,5 +45,6 @@ export class MainComponent implements OnInit {
         this.sidenav.close();
       }
     });
+    this.roomName = this.globalService.getValueKeyStorage(Constantes.RoomName);
   }
 }
