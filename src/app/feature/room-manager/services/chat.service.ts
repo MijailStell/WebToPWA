@@ -73,7 +73,7 @@ export class ChatService {
 
   public reInitUnreadMessage = () => {
     this.unreadMessages = 0;
-    this.unreadMessages$.next(this.unreadMessages)
+    this.unreadMessages$.next(this.unreadMessages);
   }
 
   public getMessages$ = () => {

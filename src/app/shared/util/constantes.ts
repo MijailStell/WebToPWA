@@ -37,6 +37,7 @@ export class Constantes {
   static readonly RutaAuth = '/auth/login';
   static readonly RutaBase = '/';
   static readonly ServerErrorCode = 500;
+  static readonly SmallWidthBreakPoint = 720;
   static readonly Token = 'token';
   static readonly True = 'true';
   static readonly UnAuthorizedCode = 401;

@@ -6,6 +6,8 @@ import { MessageService } from 'src/app/shared/services/message.service';
 import { concat, interval } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { first } from 'rxjs/operators';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { GlobalService } from './shared/services/global.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +19,9 @@ export class AppComponent implements OnInit {
   constructor(private swUpdate: SwUpdate,
               private applicationRef: ApplicationRef,
               private messageService: MessageService,
-              @Inject(PLATFORM_ID) private platformId: any) {
+              @Inject(PLATFORM_ID) private platformId: any,
+              private breakpointObserver: BreakpointObserver,
+              private globalService: GlobalService) {
   }
 
   ngOnInit(): void {
@@ -25,6 +29,13 @@ export class AppComponent implements OnInit {
       this.checkVersionUpdates();
       this.subscribeToAvailableVersions();
     }
+
+    this.breakpointObserver
+      .observe([`(max-width: ${Constantes.SmallWidthBreakPoint}px)`])
+      .subscribe((state: BreakpointState) => {
+        this.globalService.setSmallScreen(state.matches);
+        this.globalService.setNavStatus(!state.matches);
+      });
   }
 
   private checkVersionUpdates() {

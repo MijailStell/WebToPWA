@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Constantes } from 'src/app/shared/util/constantes';
 
 @Injectable({
@@ -6,7 +7,26 @@ import { Constantes } from 'src/app/shared/util/constantes';
 })
 export class GlobalService {
 
+  private isSmallScreen$ = new BehaviorSubject<boolean>(false);
+  private isNavStatus$ = new BehaviorSubject<boolean>(false);
+
   constructor() { }
+
+  public getSmallScreen$ = () => {
+    return this.isSmallScreen$.asObservable();
+  }
+
+  public setSmallScreen = (value: boolean) => {
+    this.isSmallScreen$.next(value);
+  }
+
+  public getNavStatus$ = () => {
+    return this.isNavStatus$.asObservable();
+  }
+
+  public setNavStatus = (value: boolean) => {
+    this.isNavStatus$.next(value);
+  }
 
   guardarStorage(
     token: string,
