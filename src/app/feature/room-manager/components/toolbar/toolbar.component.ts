@@ -23,9 +23,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   online$: Observable<boolean>;
   networkStatus: string;
-  isActive = false;
-  isLeft = true;
+  isActive: boolean = false;
+  isLeft: boolean = true;
   unreadMessages$: Observable<number>;
+  isVisibleUnread: boolean = false;
   subs = new SubSink();
 
   constructor(private snackBar: MatSnackBar,
@@ -44,10 +45,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subs.sink = this.globalService.getNavStatus$().subscribe(navStatus => {
       this.isActive = navStatus;
+      if(this.isActive){
+        this.unreadMessages$ = of(0);
+        this.isVisibleUnread = false;
+      }
     });
     this.subs.sink = this.chatService.getUnreadMessages$().subscribe(unreadCounter => {
       if(!this.isActive){
         this.unreadMessages$ = of(unreadCounter);
+        this.isVisibleUnread = (unreadCounter !== 0);
       }
     });
     this.subscriberService.init();
@@ -73,6 +79,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   sidenavToggle(): void{
     this.toggleSidenav.emit();
+    this.globalService.setNavStatus(true);
     this.chatService.reInitUnreadMessage();
   }
 

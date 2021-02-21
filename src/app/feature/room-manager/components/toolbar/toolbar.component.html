@@ -9,8 +9,11 @@
   <span class="example-spacer"></span>
 
   <button mat-button>
-    <mat-icon (click)="sidenavToggle()" class="pointer"
-      [matBadge]="unreadMessages$ | async" matBadgeOverlap="false" matBadgeColor="warn">
+    <mat-icon (click)="sidenavToggle()" class="pointer" *ngIf="!isVisibleUnread">
+      chat
+    </mat-icon>
+    <mat-icon (click)="sidenavToggle()" class="pointer" *ngIf="isVisibleUnread"
+      [matBadge]="unreadMessages$ | async" matBadgeOverlap="true" matBadgeColor="warn">
       chat
     </mat-icon>
   </button>

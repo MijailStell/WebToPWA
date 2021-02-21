@@ -38,7 +38,6 @@ export class ChatNavComponent implements OnInit, OnDestroy {
 
   setSubscription(): void {
     this.subs.sink = this.chatService.getMessages$().subscribe((messageList: Payload[]) => {
-      console.log(JSON.stringify(messageList));
       this.chatList = messageList;
 
       setTimeout(() => {
