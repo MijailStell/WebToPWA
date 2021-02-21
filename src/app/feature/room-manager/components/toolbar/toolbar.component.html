@@ -20,6 +20,11 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon *ngIf="isMale" svgIcon="icon-man"></mat-icon>
+      <mat-icon *ngIf="!isMale" svgIcon="icon-woman"></mat-icon>
+      <span>{{username}}</span>
+    </button>
     <button mat-menu-item (click)="toggleTheme.emit()">
       <mat-icon>change_circle</mat-icon>
       <span>Cambiar Tema</span>

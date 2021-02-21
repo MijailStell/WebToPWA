@@ -28,6 +28,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   unreadMessages$: Observable<number>;
   isVisibleUnread: boolean = false;
   subs = new SubSink();
+  username: string;
+  isMale: boolean = false;
 
   constructor(private snackBar: MatSnackBar,
               private router: Router,
@@ -43,6 +45,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.username = this.globalService.getStoredUser();
+    if(this.globalService.getValueKeyStorage(Constantes.GenderId) == Constantes.MaleCode) {
+      this.isMale = true;
+    }
+    this.setSubscription();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
+
+  setSubscription(): void {
     this.subs.sink = this.globalService.getNavStatus$().subscribe(navStatus => {
       this.isActive = navStatus;
       if(this.isActive){
@@ -58,10 +72,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     });
     this.subscriberService.init();
     this.unreadMessages$ = of(0);
-  }
-
-  ngOnDestroy(): void {
-    this.subs.unsubscribe();
   }
 
   openSnackBar(message: string, action: string) : MatSnackBarRef<SimpleSnackBar> {

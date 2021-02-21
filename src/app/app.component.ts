@@ -8,6 +8,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { first } from 'rxjs/operators';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { GlobalService } from './shared/services/global.service';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +23,9 @@ export class AppComponent implements OnInit {
               private messageService: MessageService,
               @Inject(PLATFORM_ID) private platformId: any,
               private breakpointObserver: BreakpointObserver,
-              private globalService: GlobalService) {
+              private globalService: GlobalService,
+              private matIconRegistry: MatIconRegistry,
+              private domSanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
@@ -36,6 +40,8 @@ export class AppComponent implements OnInit {
         this.globalService.setSmallScreen(state.matches);
         this.globalService.setNavStatus(!state.matches);
       });
+
+      this.registerIcons();
   }
 
   private checkVersionUpdates() {
@@ -71,5 +77,36 @@ export class AppComponent implements OnInit {
         window.location.reload();
       }
     });
+  }
+
+  private registerIcons(): void {
+    this.matIconRegistry.addSvgIcon(
+      "icon-email",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/img/icon-email.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "icon-gender",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/img/icon-gender.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "icon-man",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/img/icon-man.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "icon-pass",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/img/icon-pass.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "icon-room",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/img/icon-room.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "icon-user",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/img/icon-user.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "icon-woman",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/img/icon-woman.svg")
+    );
   }
 }

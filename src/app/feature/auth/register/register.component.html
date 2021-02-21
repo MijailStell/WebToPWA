@@ -1,6 +1,6 @@
 <div class="register-content">
   <mat-card class="register-card">
-      <form class="material-form" [formGroup]="registerForm" (ngSubmit)="register()" class="">
+      <form class="material-form" [formGroup]="registerForm" (ngSubmit)="register()" class="d-flex flex-direction-column align-items-center">
           <mat-card-header class="card-header">
               <mat-card-title>YouTube Room</mat-card-title>
           </mat-card-header>
@@ -37,10 +37,10 @@
               </mat-form-field>
               <mat-form-field class="w-100">
                 <span matPrefix><img src="./assets/img/icon-gender.svg" alt=""></span>
-                <mat-label>Gender</mat-label>
+                <mat-label>Género</mat-label>
                 <mat-select formControlName="genderId">
-                  <mat-option [value]="1">Male</mat-option>
-                  <mat-option [value]="2">Female</mat-option>
+                  <mat-option [value]="1">Masculino</mat-option>
+                  <mat-option [value]="2">Femenino</mat-option>
                 </mat-select>
               </mat-form-field>
           </mat-card-content>

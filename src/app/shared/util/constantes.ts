@@ -16,12 +16,14 @@ export class Constantes {
   static readonly EstasSeguroRealizarOperacion = '¿Estás seguro de realizar esta operación?';
   static readonly ExpiroLaSesion = 'Expiró la sesión';
   static readonly False = 'false';
+  static readonly FemaleleCode = '2';
   static readonly ForbiddenCode = 403;
   static readonly GenderId = 'genderId';
   static readonly HayUnaNuevaVersionDisponibleDeseaActualizar = 'Hay una nueva versión disponible, ¿desea actualizar?';
   static readonly IsLocal = 'isLocal';
   static readonly LaOperacionSeRealizoSatisfactoriamente = 'La operación se realizó satisfactoriamente';
   static readonly LoginStatus = 'loginStatus';
+  static readonly MaleCode = '1';
   static readonly NetworkStatus = 'NetworkStatus';
   static readonly NoTieneAccesoPantalla = 'No tiene acceso a la pantalla solicitada o su sesión ya expiró';
   static readonly OcurrioUnError= 'Ocurrió un error.';
