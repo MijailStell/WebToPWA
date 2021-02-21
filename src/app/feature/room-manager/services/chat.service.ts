@@ -105,6 +105,8 @@ export class ChatService {
       username: this.globalService.getValueKeyStorage(Constantes.Username),
       roomName: this.globalService.getValueKeyStorage(Constantes.RoomName)
     });
+    this.messages = [];
+    this.messages$.next(this.messages);
     this.socketVideo = undefined;
   }
 

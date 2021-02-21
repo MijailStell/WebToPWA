@@ -39,15 +39,15 @@
                 <span matPrefix><img src="./assets/img/icon-gender.svg" alt=""></span>
                 <mat-label>Género</mat-label>
                 <mat-select formControlName="genderId">
-                  <mat-option [value]="1">Masculino</mat-option>
-                  <mat-option [value]="2">Femenino</mat-option>
+                  <mat-option [value]="1"><mat-icon svgIcon="icon-man"></mat-icon>Masculino</mat-option>
+                  <mat-option [value]="2"><mat-icon svgIcon="icon-woman"></mat-icon>Femenino</mat-option>
                 </mat-select>
               </mat-form-field>
           </mat-card-content>
           <button type="submit" [disabled]="!registerForm.valid" mat-raised-button class="btn-register">Registrar</button>
           <div class="mt-2">
             ¿Ya tienes cuenta?
-            <a class="login" routerLink="/auth/login">Ingresa ahora</a>
+            <a class="goToLogin" routerLink="/auth/login">Ingresa ahora</a>
         </div>
       </form>
   </mat-card>
