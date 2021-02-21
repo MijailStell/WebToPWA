@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
 import * as io from 'socket.io-client';
 
 import { GlobalService } from 'src/app/shared/services/global.service';
@@ -69,6 +69,11 @@ export class ChatService {
 
   public getUnreadMessages$ = () => {
     return this.unreadMessages$.asObservable();
+  }
+
+  public reInitUnreadMessage = () => {
+    this.unreadMessages = 0;
+    this.unreadMessages$.next(this.unreadMessages)
   }
 
   public getMessages$ = () => {

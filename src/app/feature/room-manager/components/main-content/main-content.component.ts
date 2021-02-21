@@ -9,6 +9,7 @@ import { GlobalService } from 'src/app/shared/services/global.service';
 import { Constantes } from 'src/app/shared/util/constantes';
 import { SearchComponent } from 'src/app/shared/modals/search/search.component';
 import { ChatService } from 'src/app/feature/room-manager/services/chat.service';
+import { SubSink } from 'src/app/shared/util/sub-sink';
 
 @Component({
   selector: 'app-main-content',
@@ -20,9 +21,7 @@ export class MainContentComponent implements OnInit, OnDestroy, AfterViewInit {
   searchForm: FormGroup;
   videoUrl = 'https://www.youtube.com/watch?v=sem5xr_wezM';
   player: videojs.Player;
-  playedSubscription: Subscription;
-  pausedSubscription: Subscription;
-  searchedSubscription: Subscription;
+  subs = new SubSink();
 
   constructor(private _formBuilder: FormBuilder,
               public dialog: MatDialog,
@@ -44,6 +43,7 @@ export class MainContentComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.player) {
       this.player.dispose();
     }
+    this.subs.unsubscribe();
   }
 
   setForm(): void {
@@ -53,7 +53,7 @@ export class MainContentComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setSubscription(): void {
-    this.playedSubscription = this.chatService.getPlayed$().subscribe(payload => {
+    this.subs.sink = this.chatService.getPlayed$().subscribe(payload => {
       this.globalService.addKeyStorage(Constantes.IsLocal, Constantes.False);
       if (!this.globalService.getValueKeyStorage(Constantes.UrlVideo) ||
           (this.globalService.getValueKeyStorage(Constantes.UrlVideo) != payload.url)) {
@@ -65,12 +65,12 @@ export class MainContentComponent implements OnInit, OnDestroy, AfterViewInit {
       this.player.play();
     });
 
-    this.pausedSubscription = this.chatService.getPaused$().subscribe(() => {
+    this.subs.sink = this.chatService.getPaused$().subscribe(() => {
       this.globalService.addKeyStorage(Constantes.IsLocal, Constantes.False);
       this.player.pause();
     });
 
-    this.searchedSubscription = this.chatService.getPlayItemSelected$().subscribe((url: string) => {
+    this.subs.sink = this.chatService.getPlayItemSelected$().subscribe((url: string) => {
       this.player.poster('');
       this.player.src({ src: url, type: 'video/youtube' });
       this.player.currentTime(0);

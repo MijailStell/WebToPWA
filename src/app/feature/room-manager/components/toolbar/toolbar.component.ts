@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { fromEvent, merge, Observable, of } from 'rxjs';
@@ -8,13 +8,14 @@ import { GlobalService } from 'src/app/shared/services/global.service';
 import { Constantes } from 'src/app/shared/util/constantes';
 import { ChatService } from 'src/app/feature/room-manager/services/chat.service';
 import { SubscriberService } from 'src/app/feature/room-manager/services/subscriber.service';
+import { SubSink } from 'src/app/shared/util/sub-sink';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit, OnDestroy {
 
   @Output() toggleSidenav = new EventEmitter<void>();
   @Output() toggleTheme = new EventEmitter<void>();
@@ -25,6 +26,7 @@ export class ToolbarComponent implements OnInit {
   isActive = true;
   isLeft = true;
   unreadMessages$: Observable<number>;
+  subs = new SubSink();
 
   constructor(private snackBar: MatSnackBar,
               private router: Router,
@@ -40,8 +42,17 @@ export class ToolbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.unreadMessages$ = this.chatService.getUnreadMessages$();
+    this.subs.sink = this.chatService.getUnreadMessages$().subscribe(unreadCounter => {
+      if(!this.isActive){
+        this.unreadMessages$ = of(unreadCounter);
+      }
+    });
     this.subscriberService.init();
+    this.unreadMessages$ = of(0);
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
   openSnackBar(message: string, action: string) : MatSnackBarRef<SimpleSnackBar> {
@@ -60,9 +71,7 @@ export class ToolbarComponent implements OnInit {
   sidenavToggle(): void{
     this.toggleSidenav.emit();
     this.isActive = !this.isActive;
-    if(this.isActive) {
-      this.unreadMessages$ = of(0);
-    }
+    this.chatService.reInitUnreadMessage();
   }
 
   changeDirection() {
