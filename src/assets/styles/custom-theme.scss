@@ -19,6 +19,18 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
   @include angular-material-theme($theme-dark);
 }
 
+.dark-theme .mat-form-field-label {
+  color: rgb(194 24 91) !important;
+}
+
+.dark-theme .mat-form-field-infix {
+  border-bottom: 1px #bda8a8 solid;
+}
+
+.dark-theme .mat-drawer {
+  color: #000;
+}
+
 .mat-select-value {
   color: rgb(255 255 255) !important;
 }

@@ -48,6 +48,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.username = this.globalService.getStoredUser();
     if(this.globalService.getValueKeyStorage(Constantes.GenderId) == Constantes.MaleCode) {
       this.isMale = true;
+    } else  {
+      this.changeTheme();
     }
     this.setSubscription();
   }
@@ -91,6 +93,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.toggleSidenav.emit();
     this.globalService.setNavStatus(true);
     this.chatService.reInitUnreadMessage();
+  }
+
+  changeTheme(): void {
+    this.toggleTheme.emit();
   }
 
   changeDirection() {
