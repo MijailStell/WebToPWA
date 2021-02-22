@@ -49,7 +49,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     if(this.globalService.getValueKeyStorage(Constantes.GenderId) == Constantes.MaleCode) {
       this.isMale = true;
     } else  {
-      this.changeTheme();
+      setTimeout(() => {
+        this.changeTheme();
+      }, 0);
     }
     this.setSubscription();
   }

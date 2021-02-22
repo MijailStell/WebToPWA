@@ -34,12 +34,16 @@ export class SubscriberService {
       })
       .then(pushSubscription => {
         const userSubscriptor: UserSubscriptor = { pushSubscription, username: this.globalService.getStoredUser() }
-        const url = `${environment.urlBaseServiciosApi}/api/auth/subscribe`;
-        return this.httpClient.post(url, userSubscriptor);
+        this.subscribe(userSubscriptor).subscribe();
       })
       .catch((error) => {
         console.error(error);
       });
     }
+  }
+
+  subscribe(userSubscriptor: UserSubscriptor) {
+    const url = `${environment.urlBaseServiciosApi}/api/auth/subscribe`;
+    return this.httpClient.post(url, userSubscriptor);
   }
 }
