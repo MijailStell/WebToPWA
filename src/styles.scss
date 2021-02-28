@@ -3,4 +3,6 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;   background: rgb(143, 197, 236);
-  background: linear-gradient(90deg, rgba(143, 197, 236, .9) 0%, rgb(0, 155, 219, .9) 100%); }
+  background: linear-gradient(90deg, rgba(143, 197, 236, .9) 0%, rgb(0, 155, 219, .9) 100%);
+  overscroll-behavior-y: contain;
+ }
