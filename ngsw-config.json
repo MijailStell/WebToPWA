@@ -9,9 +9,15 @@
         "files": [
           "/favicon.ico",
           "/index.html",
-          "/manifest.webmanifest.json",
           "/*.css",
-          "/*.js"
+          "/*.js",
+          "/manifest.webmanifest.json"
+        ],
+        "urls": [
+          "https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap",
+          "https://fonts.googleapis.com/icon?family=Material+Icons",
+          "https://vjs.zencdn.net/7.7.5/video-js.css",
+          "https://vjs.zencdn.net/7.7.5/video.js"
         ]
       }
     }, {
