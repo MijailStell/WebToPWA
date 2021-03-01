@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
   }
 
   private askUserToUpdateApp(event: UpdateAvailableEvent) {
-    const message = `Hay una nueva versión: ${event.current.hash} disponible. ¿Desea actualizar ahora?`;
+    const message = `Hay una nueva versión disponible. ¿Desea actualizar ahora?`;
     let confirmParameter: ConfirmParameter = {
       title: Constantes.ApplicationName,
       text: message,
